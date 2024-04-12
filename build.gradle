@@ -31,6 +31,9 @@ dependencies {
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	// https://mvnrepository.com/artifact/com.h2database/h2
 	implementation 'com.h2database:h2:2.2.224'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
