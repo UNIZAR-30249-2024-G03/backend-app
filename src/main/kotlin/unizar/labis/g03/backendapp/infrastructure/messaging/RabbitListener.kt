@@ -1,7 +1,9 @@
 package unizar.labis.g03.backendapp.infrastructure.messaging
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Boolean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.amqp.core.Message
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
@@ -77,6 +79,12 @@ class RabbitListener {
 
     @Bean
     fun jsonConverter(): MessageConverter {
-        return Jackson2JsonMessageConverter()
+        val messageConverter = object : Jackson2JsonMessageConverter(){
+            override fun fromMessage(message: Message): Any {
+                message.messageProperties.contentType = "application/json"
+                return super.fromMessage(message)
+            }
+        }
+        return messageConverter
     }
 }
