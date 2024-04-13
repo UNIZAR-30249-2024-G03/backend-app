@@ -13,7 +13,7 @@ class FiltroEspacios{
     }
 }
 
-// Fechas deben estar en formato: yyyy-MM-dd'T'HH:mm:ss
+// Fechas deben estar en formato: yyyy-MM-dd'T'HH:mm:ss+02:00
 class RequestReservaEspacio{
     val idEspacio: String? = null
     val idUsuario: String? = null
