@@ -1,5 +1,7 @@
 package unizar.labis.g03.backendapp.infrastructure.messaging
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
 import java.util.Date
 
 
@@ -14,7 +16,7 @@ class FiltroEspacios{
 }
 
 // Fechas deben estar en formato: yyyy-MM-dd'T'HH:mm:ss+02:00
-class RequestReservaEspacio{
+class RequestReservaEspacio: Serializable{
     val idEspacio: String? = null
     val idUsuario: String? = null
     val fechaInicio: Date? = null
@@ -27,7 +29,7 @@ class RequestReservaEspacio{
 }
 
 
-class RequestEliminarReserva{
+class RequestEliminarReserva: Serializable{
     val idPersona: String? = null
     val idReserva: String? = null
     override fun toString(): String {
@@ -35,7 +37,7 @@ class RequestEliminarReserva{
     }
 }
 
-class RequestCambiarCaracteristicasPersonal{
+class RequestCambiarCaracteristicasPersonal: Serializable{
     val idPersona: String? = null
     val rol: String? = null
     val rolSecundario: String? = null
@@ -45,7 +47,7 @@ class RequestCambiarCaracteristicasPersonal{
     }
 }
 
-class RequestCambiarCaracteristicasEspacio{
+class RequestCambiarCaracteristicasEspacio: Serializable{
     val idEspacio: String? = null
     val idPersona: String? = null
     val reservable: Boolean? = null
