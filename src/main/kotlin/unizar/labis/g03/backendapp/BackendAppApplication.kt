@@ -37,6 +37,11 @@ class BackendAppApplication{
 	public fun cambiarCaracteristicasEspacioQueue (): Queue {
 		return Queue("cambiarCaracteristicasEspacio")
 	}
+
+	@Bean
+	public fun duplicarQueue (): Queue {
+		return Queue("duplicar")
+	}
 }
 
 fun main(args: Array<String>) {

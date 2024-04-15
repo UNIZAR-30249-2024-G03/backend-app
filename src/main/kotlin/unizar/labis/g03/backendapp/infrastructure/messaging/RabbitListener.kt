@@ -51,9 +51,31 @@ class RabbitListener {
     }
 
     @RabbitListener(queues = ["eliminarReserva"])
-    fun eliminarReservaAdapter (requestEliminarReserva: RequestEliminarReserva): Boolean{
-        logger.info("eliminarReserva: $requestEliminarReserva")
-        return true
+    fun eliminarReservaAdapter (message: Message): Int{
+        val messageConverter = object : Jackson2JsonMessageConverter(){
+            override fun fromMessage(message: Message): Any {
+                message.messageProperties.contentType = "application/json"
+                return super.fromMessage(message)
+            }
+            /*
+            override fun createMessage(objectToConvert: Any, messageProperties: MessageProperties): Message {
+                messageProperties.contentType = "application/json"
+                return super.createMessage(objectToConvert, messageProperties)
+            }
+            */
+        }
+        val prueba = messageConverter.fromMessage(message) as LinkedHashMap<*, *>
+        val idPersona: String = prueba.get("idPersona").toString()
+        val idReserva: String = prueba.get("idReserva").toString()
+
+        println(idPersona)
+        println(idReserva)
+
+
+        // val prueba = Jackson2JsonMessageConverter().fromMessage(message) as String
+        //val requestEliminarReserva: RequestEliminarReserva = RequestEliminarReserva(message.body)
+        //logger.info("eliminarReserva: $requestEliminarReserva")
+        return 1
     }
 
     @RabbitListener(queues = ["cambiarCaracteristicasPersonal"])
@@ -68,6 +90,13 @@ class RabbitListener {
         return Espacio("idEspacio", 10f, TipoEspacio.Aula, TipoEspacio.Aula, 5, 1, true, 100)
     }
 
+    @RabbitListener(queues = ["duplicar"])
+    public fun receive(value : Int): Int{
+        return value * 2
+    }
+
+    /*
+
     @Bean
     fun rabbitTemplate(connectionFactory: ConnectionFactory): RabbitTemplate {
         return RabbitTemplate(connectionFactory)
@@ -78,10 +107,13 @@ class RabbitListener {
         val template = RabbitTemplate(connectionFactory)
         return template
     }
+     */
 
+    /*
     @Bean
     fun jsonConverter(): MessageConverter {
         val messageConverter = object : Jackson2JsonMessageConverter(){
+
             override fun fromMessage(message: Message): Any {
                 message.messageProperties.contentType = "application/json"
                 return super.fromMessage(message)
@@ -98,4 +130,7 @@ class RabbitListener {
         messageConverter.setSupportedContentType(MimeTypeUtils.parseMimeType(utf16))
         return messageConverter
     }
+     */
+
+
 }
