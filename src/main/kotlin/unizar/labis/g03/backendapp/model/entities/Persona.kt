@@ -11,8 +11,8 @@ class Persona (
     private var apellido: String,
     @Id
     private var email: String,
-    private val roles: MutableSet<Rol>,
-    private var departamentoAdscrito: Departamento ) {
+    private var roles: MutableSet<Rol> = mutableSetOf(), // =
+    private var departamentoAdscrito: Departamento? = null ) {
 
     fun getRoles(): Set<Rol>{
         return roles
@@ -30,4 +30,8 @@ class Persona (
     fun setDepartamento(nuevoDepartamento: Departamento){
         departamentoAdscrito = nuevoDepartamento
     }
+    fun esGerente(): Boolean{
+        return roles.contains(Rol.Gerente)
+    }
+
 }
