@@ -1,5 +1,6 @@
 package unizar.labis.g03.backendapp.infrastructure.messaging
 
+import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -21,11 +22,24 @@ import unizar.labis.g03.backendapp.model.valueObjects.Departamento
 import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
 import unizar.labis.g03.backendapp.model.valueObjects.Rol
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import java.util.Hashtable
 
 
 @Component
-class RabbitListener {
+class RabbitListener (val rabbitTemplate: RabbitTemplate) {
     val logger: Logger = LoggerFactory.getLogger(RabbitListener::class.java)
+    val messageConverter = object : Jackson2JsonMessageConverter(){
+        override fun fromMessage(message: Message): Any {
+            message.messageProperties.contentType = "application/json"
+            return super.fromMessage(message)
+        }
+        /*
+        override fun createMessage(objectToConvert: Any, messageProperties: MessageProperties): Message {
+            messageProperties.contentType = "application/json"
+            return super.createMessage(objectToConvert, messageProperties)
+        }
+        */
+    }
 
     @RabbitListener(queues = ["buscarEspacios"])
     fun buscarEspaciosAdapter (filtro: FiltroEspacios): List<Espacio>{
@@ -52,21 +66,9 @@ class RabbitListener {
 
     @RabbitListener(queues = ["eliminarReserva"])
     fun eliminarReservaAdapter (message: Message): Int{
-        val messageConverter = object : Jackson2JsonMessageConverter(){
-            override fun fromMessage(message: Message): Any {
-                message.messageProperties.contentType = "application/json"
-                return super.fromMessage(message)
-            }
-            /*
-            override fun createMessage(objectToConvert: Any, messageProperties: MessageProperties): Message {
-                messageProperties.contentType = "application/json"
-                return super.createMessage(objectToConvert, messageProperties)
-            }
-            */
-        }
         val prueba = messageConverter.fromMessage(message) as LinkedHashMap<*, *>
-        val idPersona: String = prueba.get("idPersona").toString()
-        val idReserva: String = prueba.get("idReserva").toString()
+        val idPersona: String = prueba["idPersona"].toString()
+        val idReserva: String = prueba["idReserva"].toString()
 
         println(idPersona)
         println(idReserva)
@@ -79,9 +81,25 @@ class RabbitListener {
     }
 
     @RabbitListener(queues = ["cambiarCaracteristicasPersonal"])
-    fun cambiarCaracteristicasPersonalAdapter (requestCambiarPersonal: RequestCambiarCaracteristicasPersonal): Persona{
-        logger.info("cambiarCaracteristicasPersonal: $requestCambiarPersonal")
-        return Persona("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(),Departamento.Informatica_e_Ingenieria_de_sistemas)
+    fun cambiarCaracteristicasPersonalAdapter (message: Message): Int{
+        //val replyTo = message.messageProperties.replyTo
+        //println(message.messageProperties.)
+        //rabbitTemplate.convertAndSend("amq.direct", replyTo, "a")
+
+        val prueba = messageConverter.fromMessage(message) as LinkedHashMap<*, *>
+        val idPersona: String = prueba["idPersona"].toString()
+        val rol: String = prueba["rol"].toString()
+        val rolSecundario: String = prueba["rolSecundario"].toString()
+        val departamento : String = prueba["departamento"].toString()
+        println(idPersona + rol + rolSecundario + departamento)
+        logger.info("cambiarCaracteristicasPersonal")
+        //val response : MutableMap<*,*> = new java.util.HashMap()
+        val response = HashMap<Any,Any>()
+        response.put("nombre", "Paco")
+
+        return 1
+        //return response
+        //return Persona("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(),Departamento.Informatica_e_Ingenieria_de_sistemas)
     }
 
     @RabbitListener(queues = ["cambiarCaracteristicasEspacio"])
