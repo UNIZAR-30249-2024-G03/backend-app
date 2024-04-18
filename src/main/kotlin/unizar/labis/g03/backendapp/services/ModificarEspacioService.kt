@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import unizar.labis.g03.backendapp.model.entities.Espacio
 import unizar.labis.g03.backendapp.model.entities.Reserva
+import unizar.labis.g03.backendapp.model.valueObjects.Horario
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 import unizar.labis.g03.backendapp.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.repositories.ReservaRepository
@@ -27,8 +28,10 @@ class ModificarEspacioService @Autowired constructor(private val espacioReposito
             // Modificar los campos necesarios
             espacio.setReservable(reservable)
             espacio.setCategoriaReserva(categoriaReserva!!)
-            espacio.setHorario(horaApertura, horaCierre)
+            espacio.setHorario( Horario(horaApertura,horaCierre) )
             espacio.setPorcentajeUsoMaximo(porcentajeUsoMaximo)
+            //Recorrer todas las reservas del espacio
+
             // Guardar la entidad modificada
             espacioRepository.save(espacio)
         } else {

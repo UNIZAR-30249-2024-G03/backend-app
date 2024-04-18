@@ -8,7 +8,7 @@ import unizar.labis.g03.backendapp.repositories.EspacioRepository
 
 @Service
 class BuscarEspacioService @Autowired constructor(private val espacioRepository: EspacioRepository) {
-    fun buscarEspacio(id: String?, categoria: TipoEspacio?, ocupantesMaximos: Int, planta: Int): List<Espacio> {
+    fun buscarEspacio(id: String?, categoria: TipoEspacio?, ocupantesMaximos: Int?, planta: Int?): List<Espacio> {
         return espacioRepository.buscarEspacios(id, categoria, ocupantesMaximos, planta) ?: emptyList()
     }
 }

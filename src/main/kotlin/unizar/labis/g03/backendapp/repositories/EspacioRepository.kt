@@ -16,7 +16,7 @@ interface EspacioRepository : JpaRepository<Espacio?, String?> {
     fun buscarEspacios(
         @Param("id") id: String?,
         @Param("categoriaReserva") categoriaReserva: TipoEspacio?,
-        @Param("numMaxOcupantes") numMaxOcupantes: Int,
-        @Param("planta") planta: Int
+        @Param("numMaxOcupantes") numMaxOcupantes: Int?,
+        @Param("planta") planta: Int?
     ): List<Espacio>?
 }

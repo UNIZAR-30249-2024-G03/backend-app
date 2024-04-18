@@ -6,6 +6,7 @@ import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
 @Entity
 class Reserva(
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: String,
     @ManyToOne
     val persona: Persona,
@@ -14,5 +15,8 @@ class Reserva(
     @Embedded
     val infoReserva: InfoReserva,
     val anulado: Boolean = false){
+
+    constructor(persona: Persona, espacios: MutableList<Espacio>, infoReserva: InfoReserva)
+            : this("", persona, espacios, infoReserva)
 
 }

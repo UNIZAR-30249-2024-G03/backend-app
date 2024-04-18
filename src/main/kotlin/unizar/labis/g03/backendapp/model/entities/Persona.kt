@@ -17,6 +17,9 @@ class Persona (
     fun getRoles(): Set<Rol>{
         return roles
     }
+    fun getnombre(): String{
+        return nombre
+    }
 
     fun setRoles(nuevosRoles : Set<Rol>){
         roles.clear()

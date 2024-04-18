@@ -24,20 +24,18 @@ class Espacio (
     @Embedded
     private var horario: Horario,
     private var porcentajeUsoMaximo: Int
-){
+)
+
+{
     fun getId(): String{
         return id
     }
     fun getReservable(): Boolean{
         return reservable
     }
-    fun maximosOcupantesValido(espacios:List<Espacio>): Int{
-        return espacios.sumOf { it.getCapacidadMaxima() }
-    }
-    fun setHorario(horaApertura: Int, horaCierre: Int){
-        if(horario.horaValida(horaApertura,horaCierre)){
-            horario = Horario(horaApertura,horaCierre)
-        }
+
+    fun setHorario(horario: Horario){
+        this.horario = horario
     }
     fun getHorario(): Horario{
         return horario

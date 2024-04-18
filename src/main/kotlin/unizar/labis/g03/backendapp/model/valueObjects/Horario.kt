@@ -12,15 +12,17 @@ class Horario{
     val horaCierre: Int
 
     constructor(horaApertura: Int, horaCierre: Int) {
-        this.horaApertura = horaApertura
-        this.horaCierre = horaCierre
+        if(horaApertura < horaCierre) {
+            this.horaApertura = horaApertura
+            this.horaCierre = horaCierre
+        } else {
+            throw IllegalArgumentException("La hora de apertura debe ser menor que la hora de cierre")
+        }
     }
     // Constructor por defecto
     constructor() : this(HORA_APERTURA_DEFAULT,HORA_CIERRE_DEFAULT)
     fun estaDentro(horaInicio: Int,horaFin: Int  ): Boolean  {
         return horaInicio in horaApertura..horaCierre && horaFin in horaApertura..horaCierre
     }
-    fun horaValida(horaInicio: Int,horaFin: Int): Boolean {
-        return horaInicio < horaFin;
-    }
+
 }
