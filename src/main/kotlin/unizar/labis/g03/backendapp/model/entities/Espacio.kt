@@ -43,6 +43,9 @@ class Espacio (
     fun setPorcentajeUsoMaximo (nuevoPorcentaje: Int){
         porcentajeUsoMaximo = nuevoPorcentaje
     }
+    fun getPorcentajeUsoMaximo(): Int{
+        return porcentajeUsoMaximo
+    }
     fun getCapacidadMaxima(): Int {
         return ((numMaxOcupantes.toDouble() / porcentajeUsoMaximo) * 100).toInt()
     }
@@ -53,6 +56,9 @@ class Espacio (
 
     fun setCategoriaReserva(categoriaReserva: TipoEspacio) {
         this.categoriaReserva = categoriaReserva
+    }
+    fun getCategoriaReserva(): TipoEspacio {
+        return categoriaReserva
     }
 
 }

@@ -27,11 +27,10 @@ public class ReservarEspacioService {
     }
 
     //  Date fechaInicio, Date fechaFinal, int numAsistentesPrevistos, String descripcion
-    public void reservarEspacios(Reserva reserva, String idPersona, List<String> idEspacios) {
-        Persona persona = reserva.getPersona();
-        List<Espacio> espacios = reserva.getEspacios();
+    public void reservarEspacios(ReservaDTO reservaDTO) {
+        Reserva reserva = buildReserva(reservaDTO);
         InfoReserva infoReserva = reserva.getInfoReserva();
-        for (Espacio espacio : espacios) {
+        for (Espacio espacio : reserva.getEspacios()) {
             if (!espacio.getReservable()) {
                 //Espacio no reservable
             }
@@ -42,7 +41,7 @@ public class ReservarEspacioService {
                     (espacio.getId(), infoReserva.getFechaInicio(), infoReserva.getFechaFinal());//Espacio no esta reservado
             if (!reservasConflictivas.isEmpty()) {
                 //Si no es gerente
-                if (persona.esGerente()) {
+                if (reserva.getPersona().esGerente()) {
                     borrarReservasConflictivas(reservasConflictivas);
                     //save?
                 }
@@ -61,7 +60,8 @@ public class ReservarEspacioService {
     private Reserva buildReserva(ReservaDTO reservaDTO) {
         List<Espacio> espacios = espacioRepository.findAllById(reservaDTO.getIdEspacios());
         Persona persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario());
-        InfoReserva infoReserva = reservaDTO.getInfoReserva();
+        InfoReserva infoReserva = new InfoReserva(reservaDTO.getNumAsistentesPrevistos(), reservaDTO.getFechaInicio(),
+                reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(), maximosOcupantesValido(espacios) );
         return new Reserva(persona, espacios, infoReserva);
     }
 
@@ -71,5 +71,13 @@ public class ReservarEspacioService {
         }
         //Espacio.opEspacio.maximosOcupantesValido()
 
+    }
+
+    private Integer  maximosOcupantesValido( List<Espacio> espacios){
+        int suma = 0;
+        for (Espacio espacio : espacios) {
+            suma += espacio.getCapacidadMaxima();
+        }
+        return suma;
     }
 }

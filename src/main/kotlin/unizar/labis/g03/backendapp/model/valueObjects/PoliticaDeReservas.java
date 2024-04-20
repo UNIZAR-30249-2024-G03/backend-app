@@ -1,4 +1,4 @@
-package unizar.labis.g03.backendapp.services;
+package unizar.labis.g03.backendapp.model.valueObjects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,21 +10,14 @@ import unizar.labis.g03.backendapp.repositories.ReservaRepository;
 
 import java.util.List;
 
-@Service
+
 public class PoliticaDeReservas {
 
-    private final ReservaRepository reservaRepository;
-
-
-    @Autowired
-    public PoliticaDeReservas(ReservaRepository reservaRepository) {
-
-        this.reservaRepository = reservaRepository;
-
-    }
     public boolean comprobarPoliticaDeReservas(Reserva reserva){
+        Persona persona = reserva.getPersona();
+        List<Espacio> espacios = reserva.getEspacios();
+        InfoReserva infoReserva = reserva.getInfoReserva();
 
-        //Persona autorizada a reserva este espacio
         return true;
     }
 

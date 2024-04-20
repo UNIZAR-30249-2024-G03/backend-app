@@ -2,10 +2,12 @@ package unizar.labis.g03.backendapp.model.entities
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import jakarta.persistence.Table
 import unizar.labis.g03.backendapp.model.valueObjects.Rol
 import unizar.labis.g03.backendapp.model.valueObjects.Departamento
 
 @Entity
+@Table(name = "personas")
 class Persona (
     private var nombre: String,
     private var apellido: String,
@@ -36,5 +38,10 @@ class Persona (
     fun esGerente(): Boolean{
         return roles.contains(Rol.Gerente)
     }
+
+    override fun toString(): String {
+        return "Persona(nombre='$nombre', apellido='$apellido', email='$email', roles=$roles, departamentoAdscrito=$departamentoAdscrito)"
+    }
+
 
 }
