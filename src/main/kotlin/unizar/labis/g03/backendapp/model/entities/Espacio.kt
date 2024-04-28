@@ -34,6 +34,10 @@ class Espacio (
         return reservable
     }
 
+    fun getTamano(): Float {
+        return tamano
+    }
+
     fun setHorario(horario: Horario){
         this.horario = horario
     }
@@ -59,6 +63,10 @@ class Espacio (
     }
     fun getCategoriaReserva(): TipoEspacio {
         return categoriaReserva
+    }
+
+    override fun toString(): String {
+        return "Espacio(id='$id', tamano=$tamano, tipoEspacio=$tipoEspacio, categoriaReserva=$categoriaReserva, numMaxOcupantes=$numMaxOcupantes, planta=$planta, reservable=$reservable, horario=$horario, porcentajeUsoMaximo=$porcentajeUsoMaximo)"
     }
 
 }

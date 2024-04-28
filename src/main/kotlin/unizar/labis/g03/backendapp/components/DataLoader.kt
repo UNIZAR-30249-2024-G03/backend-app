@@ -3,13 +3,20 @@ package unizar.labis.g03.backendapp.components
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
+import unizar.labis.g03.backendapp.model.entities.Espacio
 import unizar.labis.g03.backendapp.model.entities.Persona
+import unizar.labis.g03.backendapp.model.valueObjects.Horario
+import unizar.labis.g03.backendapp.model.valueObjects.Rol
+import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.repositories.PersonaRepository
 
 @Component
 class DataLoader : CommandLineRunner {
     @Autowired
     private val personaRepository: PersonaRepository? = null
+    @Autowired
+    private val espacioRepository: EspacioRepository? = null
     @Throws(Exception::class)
     override fun run(vararg args: String) {
         cargarDatosDePrueba()
@@ -17,16 +24,28 @@ class DataLoader : CommandLineRunner {
 
     private fun cargarDatosDePrueba() {
         println("HOla mundo!")
+        val gerente = Persona(email = "gerente@gmail.com", nombre = "Gerente", apellido = "Gerentioso")
+        gerente.setRoles(setOf(Rol.Gerente))
         val personas = listOf(
             Persona(email = "persona1@example.com", nombre = "Nombre1", apellido = "Apellido1"),
             Persona(email = "persona2@example.com", nombre = "Nombre2", apellido = "Apellido2"),
             Persona(email = "persona3@example.com", nombre = "Nombre3", apellido = "Apellido3"),
             Persona(email = "persona4@example.com", nombre = "Nombre4", apellido = "Apellido4"),
-            Persona(email = "persona5@example.com", nombre = "Nombre5", apellido = "Apellido5")
+            Persona(email = "persona5@example.com", nombre = "Nombre5", apellido = "Apellido5"),
+            gerente
+        )
+        val espacios = listOf(
+            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.Aula, categoriaReserva = TipoEspacio.Aula, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100),
+            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.Laboratorio, categoriaReserva = TipoEspacio.Laboratorio, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100)
         )
         personaRepository?.saveAll(personas)
 
+        espacioRepository?.saveAll(espacios)
+
         val personasGuardadas = personaRepository?.findAll()
         println("Personas guardadas: $personasGuardadas")
+
+        val espaciosGuardados = espacioRepository?.findAll()
+        println("Espacios guardadas: $espaciosGuardados")
     }
 }

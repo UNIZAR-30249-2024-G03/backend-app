@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 
-@ComponentScan(basePackages  = ["unizar.labis.g03.backendapp.repositories"])
+//@ComponentScan(basePackages  = ["unizar.labis.g03.backendapp.repositories"])
 @EnableScheduling
 @SpringBootApplication
 class BackendAppApplication{
@@ -52,7 +52,7 @@ class BackendAppApplication{
 
 	@Scheduled(fixedRate = 10000) // Ejecutar cada 5 segundos
 	fun ejecutarTarea() {
-		println("¡La tarea se está ejecutando!")
+		// println("¡La tarea se está ejecutando!")
 	}
 }
 
