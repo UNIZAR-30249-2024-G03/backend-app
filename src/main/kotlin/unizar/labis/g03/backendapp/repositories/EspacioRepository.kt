@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param
 import unizar.labis.g03.backendapp.model.entities.Espacio
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 
-interface EspacioRepository : JpaRepository<Espacio?, String?> {
+interface EspacioRepository : JpaRepository<Espacio, String?> {
     @Query(
         "SELECT e FROM Espacio e WHERE (:id is null OR e.id = :id) " +
                 "AND (:categoriaReserva is null OR e.categoriaReserva = :categoriaReserva) " +

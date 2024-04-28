@@ -1,48 +1,42 @@
-package unizar.labis.g03.backendapp.services;
+package unizar.labis.g03.backendapp.services
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import unizar.labis.g03.backendapp.model.DTO.ReservaDTO;
-import unizar.labis.g03.backendapp.model.entities.Espacio;
-import unizar.labis.g03.backendapp.model.entities.Persona;
-import unizar.labis.g03.backendapp.model.entities.Reserva;
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva;
-import unizar.labis.g03.backendapp.repositories.EspacioRepository;
-import unizar.labis.g03.backendapp.repositories.PersonaRepository;
-import unizar.labis.g03.backendapp.repositories.ReservaRepository;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import unizar.labis.g03.backendapp.model.DTO.ReservaDTO
+import unizar.labis.g03.backendapp.model.entities.Espacio
+import unizar.labis.g03.backendapp.model.entities.Reserva
+import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.repositories.EspacioRepository
+import unizar.labis.g03.backendapp.repositories.PersonaRepository
+import unizar.labis.g03.backendapp.repositories.ReservaRepository
+import java.util.Optional
 
 @Service
-public class ReservarEspacioService {
-    private final ReservaRepository reservaRepository;
-    private final EspacioRepository espacioRepository;
-    private final PersonaRepository personaRepository;
-
-    @Autowired
-    public ReservarEspacioService(ReservaRepository reservaRepository, EspacioRepository espacioRepository, PersonaRepository personaRepository) {
-        this.reservaRepository = reservaRepository;
-        this.espacioRepository = espacioRepository;
-        this.personaRepository = personaRepository;
-    }
-
+class ReservarEspacioService @Autowired constructor(
+    private val reservaRepository: ReservaRepository,
+    private val espacioRepository: EspacioRepository,
+    private val personaRepository: PersonaRepository
+) {
     //  Date fechaInicio, Date fechaFinal, int numAsistentesPrevistos, String descripcion
-    public void reservarEspacios(ReservaDTO reservaDTO) {
-        Reserva reserva = buildReserva(reservaDTO);
-        InfoReserva infoReserva = reserva.getInfoReserva();
-        for (Espacio espacio : reserva.getEspacios()) {
+    fun reservarEspacios(reservaDTO: ReservaDTO): Optional<Reserva> {
+        val reserva = buildReserva(reservaDTO)
+        val infoReserva = reserva.infoReserva
+        for (espacio in reserva.espacios) {
             if (!espacio.getReservable()) {
                 //Espacio no reservable
             }
             if (espacio.getHorario().estaDentro(infoReserva.getHoraInicio(), infoReserva.getHoraFinal())) {
                 // Horario no disponible
             }
-            List<Reserva> reservasConflictivas = reservaRepository.encontrarReservasConflictivas
-                    (espacio.getId(), infoReserva.getFechaInicio(), infoReserva.getFechaFinal());//Espacio no esta reservado
-            if (!reservasConflictivas.isEmpty()) {
+            val reservasConflictivas = reservaRepository.encontrarReservasConflictivas(
+                espacio.getId(),
+                infoReserva.fechaInicio,
+                infoReserva.fechaFinal
+            ) //Espacio no esta reservado
+            if (reservasConflictivas.isNotEmpty()) {
                 //Si no es gerente
-                if (reserva.getPersona().esGerente()) {
-                    borrarReservasConflictivas(reservasConflictivas);
+                if (reserva.persona.esGerente()) {
+                    borrarReservasConflictivas(reservasConflictivas)
                     //save?
                 }
             }
@@ -54,30 +48,33 @@ public class ReservarEspacioService {
         //Comprobamos que la reserva cumple con la politica de reservas
 
         //Guardamos la reserva en la base de datos
-        reservaRepository.save(reserva);
+        reservaRepository.save(reserva)
+        return Optional.of(reserva)
     }
 
-    private Reserva buildReserva(ReservaDTO reservaDTO) {
-        List<Espacio> espacios = espacioRepository.findAllById(reservaDTO.getIdEspacios());
-        Persona persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario());
-        InfoReserva infoReserva = new InfoReserva(reservaDTO.getNumAsistentesPrevistos(), reservaDTO.getFechaInicio(),
-                reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(), maximosOcupantesValido(espacios) );
-        return new Reserva(persona, espacios, infoReserva);
+    private fun buildReserva(reservaDTO: ReservaDTO): Reserva {
+        val espacios = espacioRepository.findAllById(reservaDTO.getIdEspacios())
+        val persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario()).get()
+        val infoReserva = InfoReserva(
+            reservaDTO.getNumAsistentesPrevistos(), reservaDTO.getFechaInicio(),
+            reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(), maximosOcupantesValido(espacios)
+        )
+        return Reserva(null, persona, espacios, infoReserva)
     }
 
-    private void borrarReservasConflictivas( List<Reserva> reservasConflictivas) {
-        for (Reserva r : reservasConflictivas) {
-            reservaRepository.anularReserva(r.getId());
+    private fun borrarReservasConflictivas(reservasConflictivas: List<Reserva>) {
+        for (r in reservasConflictivas) {
+            reservaRepository.anularReserva(r.id)
         }
+
         //Espacio.opEspacio.maximosOcupantesValido()
-
     }
 
-    private Integer  maximosOcupantesValido( List<Espacio> espacios){
-        int suma = 0;
-        for (Espacio espacio : espacios) {
-            suma += espacio.getCapacidadMaxima();
+    private fun maximosOcupantesValido(espacios: List<Espacio?>): Int {
+        var suma = 0
+        for (espacio in espacios) {
+            suma += espacio!!.getCapacidadMaxima()
         }
-        return suma;
+        return suma
     }
 }

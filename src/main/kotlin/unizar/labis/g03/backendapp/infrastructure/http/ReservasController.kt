@@ -10,13 +10,15 @@ import unizar.labis.g03.backendapp.infrastructure.http.types.PersonaOut
 import unizar.labis.g03.backendapp.infrastructure.http.types.ReservaOut
 import unizar.labis.g03.backendapp.model.entities.Reserva
 import unizar.labis.g03.backendapp.model.valueObjects.*
+import unizar.labis.g03.backendapp.services.AnularReservaService
 import unizar.labis.g03.backendapp.services.ConsultarReservasService
 import java.util.*
 import kotlin.collections.HashSet
 
 @RestController
 class ReservasController(
-    private val consultarReservasService: ConsultarReservasService){
+    private val consultarReservasService: ConsultarReservasService,
+    private val anularReservaService: AnularReservaService){
     @Operation(
         summary = "Permite a un usuario con rol de gerente obtener todas las reservas vivas del sistema",
         description = "Obtiene una lista con todas las Reservas vivas del sistema asociadas si el usuario con id 'idUsuario' tiene rol de gerente .")
@@ -52,8 +54,10 @@ class ReservasController(
         summary = "Permite a un usuario con rol de gerente eliminar una reserva del sistema",
         description = "Permite eliminar del sistema la reserva con identificador 'id' si el usuario con identificador 'idUsuario' tiene el rol de gerente.")
     @DeleteMapping("/reservas/{id}")
-    fun eliminarReserva(@Parameter(name = "idReserva", description = "Identificador de la reserva a modificar", example = "reserva-1") @RequestParam(required = true) @PathVariable idReserva : String,
-                        @Parameter(name = "idUsuario", description = "Identificador del usuario que desea eliminar la reserva", example = "795593") @RequestParam(required = true) idUsuario : Int,): ResponseEntity<String> {
-        return ResponseEntity.ok("Reserva \"$idReserva\" eliminada con exito");
+    fun eliminarReserva(@Parameter(name = "idReserva", description = "Identificador de la reserva a modificar", example = "reserva-1") @RequestParam(required = true) @PathVariable idReserva : Int,
+                        @Parameter(name = "idUsuario", description = "Identificador del usuario que desea eliminar la reserva", example = "795593") @RequestParam(required = true) idUsuario : String,): ResponseEntity<String> {
+        val eliminada = anularReservaService.anularReserva(idUsuario, idReserva)
+        return if (eliminada) ResponseEntity.ok("Reserva \"$idReserva\" eliminada con exito")
+        else ResponseEntity.notFound().build()
     }
 }

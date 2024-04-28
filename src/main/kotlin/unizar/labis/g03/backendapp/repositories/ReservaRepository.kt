@@ -1,6 +1,7 @@
 package unizar.labis.g03.backendapp.repositories
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import unizar.labis.g03.backendapp.model.entities.Espacio
@@ -20,7 +21,9 @@ interface ReservaRepository : JpaRepository<Reserva?, String?> {
     fun findByAnulado(anulado: Boolean): List<Reserva>?
     @Query("SELECT r FROM Reserva r WHERE :espacio MEMBER OF r.espacios")
     fun findByEspacio(espacio: Espacio): List<Reserva>?
+
+    @Modifying
     @Query("UPDATE Reserva SET anulado = true WHERE id = ?1")
-    fun anularReserva(idReserva: String) {
+    fun anularReserva(idReserva: Int?) {
     }
 }
