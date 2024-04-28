@@ -4,8 +4,11 @@ import org.springframework.amqp.core.Queue
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.scheduling.annotation.Scheduled
 
-
+@EnableScheduling
 @SpringBootApplication
 class BackendAppApplication{
 	@Bean
@@ -41,6 +44,14 @@ class BackendAppApplication{
 	@Bean
 	public fun duplicarQueue (): Queue {
 		return Queue("duplicar")
+	}
+}
+
+@ComponentScan(basePackages  = ["unizar.labis.g03.backendapp.repositories"])
+class BackendAppApplication{
+	@Scheduled(fixedRate = 10000) // Ejecutar cada 5 segundos
+	fun ejecutarTarea() {
+		println("¡La tarea se está ejecutando!")
 	}
 }
 
