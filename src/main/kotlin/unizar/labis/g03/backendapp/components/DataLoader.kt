@@ -5,11 +5,15 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import unizar.labis.g03.backendapp.model.entities.Espacio
 import unizar.labis.g03.backendapp.model.entities.Persona
+import unizar.labis.g03.backendapp.model.entities.Reserva
 import unizar.labis.g03.backendapp.model.valueObjects.Horario
+import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
 import unizar.labis.g03.backendapp.model.valueObjects.Rol
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 import unizar.labis.g03.backendapp.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.repositories.PersonaRepository
+import unizar.labis.g03.backendapp.repositories.ReservaRepository
+import java.time.LocalDateTime
 
 @Component
 class DataLoader : CommandLineRunner {
@@ -17,6 +21,8 @@ class DataLoader : CommandLineRunner {
     private val personaRepository: PersonaRepository? = null
     @Autowired
     private val espacioRepository: EspacioRepository? = null
+    @Autowired
+    private val reservaRepository: ReservaRepository? = null
     @Throws(Exception::class)
     override fun run(vararg args: String) {
         cargarDatosDePrueba()
@@ -38,14 +44,24 @@ class DataLoader : CommandLineRunner {
             Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.Aula, categoriaReserva = TipoEspacio.Aula, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100),
             Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.Laboratorio, categoriaReserva = TipoEspacio.Laboratorio, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100)
         )
+
+        val reservas = listOf(
+            Reserva(id = null, persona = personas[0], espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20)),
+            Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20))
+        )
         personaRepository?.saveAll(personas)
 
         espacioRepository?.saveAll(espacios)
+
+        reservaRepository?.saveAll(reservas)
 
         val personasGuardadas = personaRepository?.findAll()
         println("Personas guardadas: $personasGuardadas")
 
         val espaciosGuardados = espacioRepository?.findAll()
         println("Espacios guardadas: $espaciosGuardados")
+
+        val reservasGuardadas = reservaRepository?.findAll()
+        println("Reservas guardadas: $reservasGuardadas")
     }
 }

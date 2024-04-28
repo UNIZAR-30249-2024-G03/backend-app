@@ -8,28 +8,21 @@ import org.springframework.web.bind.annotation.*
 import unizar.labis.g03.backendapp.infrastructure.http.types.EspacioOut
 import unizar.labis.g03.backendapp.infrastructure.http.types.PersonaOut
 import unizar.labis.g03.backendapp.infrastructure.http.types.ReservaOut
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.entities.Persona
 import unizar.labis.g03.backendapp.model.entities.Reserva
 import unizar.labis.g03.backendapp.model.valueObjects.*
+import unizar.labis.g03.backendapp.services.ConsultarReservasService
 import java.util.*
 import kotlin.collections.HashSet
 
 @RestController
-class ReservasController {
+class ReservasController(
+    private val consultarReservasService: ConsultarReservasService){
     @Operation(
         summary = "Permite a un usuario con rol de gerente obtener todas las reservas vivas del sistema",
         description = "Obtiene una lista con todas las Reservas vivas del sistema asociadas si el usuario con id 'idUsuario' tiene rol de gerente .")
     @GetMapping("/reservas")
-    fun getReservasVivas(@Parameter(name = "idUsuario", description = "Identificador del usuario que desea obtener los espacios", example = "795593") @RequestParam(required = true) idUsuario : Int): List<ReservaOut> {
-        val conjuntoReservas : MutableList<ReservaOut> = ArrayList<ReservaOut>();
-        conjuntoReservas.add(ReservaOut(
-            "idReserva",
-            PersonaOut("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(),Departamento.Informatica_e_Ingenieria_de_sistemas),
-            EspacioOut("idEspacio", 10f, TipoEspacio.Aula, TipoEspacio.Aula, 5, 1, true, 100),
-            InfoReserva()
-        ))
-        return conjuntoReservas
+    fun getReservasVivas(@Parameter(name = "idUsuario", description = "Identificador del usuario que desea obtener los espacios", example = "example@gmail.com") @RequestParam(required = true) idUsuario : String): List<Reserva>? {
+        return consultarReservasService.consultarReservas(idUsuario)
     }
 
 
