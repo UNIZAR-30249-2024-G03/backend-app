@@ -27,6 +27,7 @@ import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 class RabbitListener {
     val logger: Logger = LoggerFactory.getLogger(RabbitListener::class.java)
 
+    /*
     @RabbitListener(queues = ["buscarEspacios"])
     fun buscarEspaciosAdapter (filtro: FiltroEspacios): List<Espacio>{
         logger.info("buscarEspacios: $filtro")
@@ -131,6 +132,5 @@ class RabbitListener {
         return messageConverter
     }
      */
-
-
+     */
 }
