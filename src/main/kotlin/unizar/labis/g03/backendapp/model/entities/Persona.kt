@@ -1,8 +1,6 @@
 package unizar.labis.g03.backendapp.model.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import unizar.labis.g03.backendapp.model.valueObjects.Rol
 import unizar.labis.g03.backendapp.model.valueObjects.Departamento
 
@@ -13,7 +11,9 @@ class Persona (
     private var apellido: String,
     @Id
     private var email: String,
+    @Enumerated(EnumType.STRING)
     private var roles: MutableSet<Rol> = mutableSetOf(), // =
+    @Enumerated(EnumType.STRING)
     private var departamentoAdscrito: Departamento? = null ) {
 
     fun getRoles(): Set<Rol>{

@@ -43,7 +43,7 @@ class ReservasController(
         val reserva = ReservaOut(
             "idReserva",
             PersonaOut("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(),Departamento.Informatica_e_Ingenieria_de_sistemas),
-            EspacioOut("idEspacio", 10f, TipoEspacio.Aula, TipoEspacio.Aula, 5, 1, true, 100),
+            EspacioOut("idEspacio", 10f, TipoEspacio.AULA, TipoEspacio.AULA, 5, 1, true, 100),
             InfoReserva()
         )
 

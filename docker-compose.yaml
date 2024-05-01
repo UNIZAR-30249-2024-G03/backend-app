@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgis:
+    image: kartoza/postgis:9.6-2.4
+    ports:
+      - "25432:5432"
+    environment:
+      - "POSTGRES_USER=proyecto"
+      - "POSTGRES_PASS=proyectovm"
+      - "POSTGRES_DBNAME=proyectodb"
+      - "DEFAULT_ENCODING=UTF8"
+      # Descomenta la siguiente línea si te da un error de conexión desde QGIS que dice algo como
+      # "... no pg_hba.conf entry for host "172.x.x.x", ..., SSL off"
+      - "ALLOW_IP_RANGE=172.0.0.0/8"
+    volumes:
+      - dbdata:/var/lib/postgresql      
+volumes:
+    dbdata:
+        external: true    

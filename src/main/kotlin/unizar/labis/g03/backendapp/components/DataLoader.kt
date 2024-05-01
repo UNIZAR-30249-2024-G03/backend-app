@@ -41,8 +41,8 @@ class DataLoader : CommandLineRunner {
             gerente
         )
         val espacios = listOf(
-            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.Aula, categoriaReserva = TipoEspacio.Aula, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100),
-            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.Laboratorio, categoriaReserva = TipoEspacio.Laboratorio, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100)
+            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.AULA, categoriaReserva = TipoEspacio.AULA, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100),
+            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.LABORATORIO, categoriaReserva = TipoEspacio.LABORATORIO, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100)
         )
 
         val reservas = listOf(

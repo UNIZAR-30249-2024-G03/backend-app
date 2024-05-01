@@ -1,9 +1,7 @@
 package unizar.labis.g03.backendapp.model.entities
 
-import jakarta.persistence.Embedded
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 import lombok.Setter
-import jakarta.persistence.Id
 import lombok.Getter
 import unizar.labis.g03.backendapp.model.valueObjects.Horario
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
@@ -16,7 +14,9 @@ class Espacio (
     @Id
     private val id: String,
     private val tamano: Float,
+    @Enumerated(EnumType.STRING)
     private val tipoEspacio: TipoEspacio,
+    @Enumerated(EnumType.STRING)
     private var categoriaReserva: TipoEspacio,
     private val numMaxOcupantes: Int,
     private val planta: Int,
