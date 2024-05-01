@@ -7,6 +7,10 @@ class Horario{
     companion object {
         const val HORA_APERTURA_DEFAULT = 8
         const val HORA_CIERRE_DEFAULT = 21
+
+        fun horarioDefecto() : Horario{
+            return Horario(HORA_APERTURA_DEFAULT, HORA_CIERRE_DEFAULT)
+        }
     }
     val horaApertura: Int
     val horaCierre: Int

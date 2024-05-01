@@ -1,19 +1,21 @@
 version: '3'
 services:
   postgis:
-    image: kartoza/postgis:9.6-2.4
+    image: postgis/postgis
     ports:
       - "25432:5432"
     environment:
       - "POSTGRES_USER=proyecto"
-      - "POSTGRES_PASS=proyectovm"
-      - "POSTGRES_DBNAME=proyectodb"
+      - "POSTGRES_PASSWORD=proyectovm"
+      - "POSTGRES_DB=proyectodb"
       - "DEFAULT_ENCODING=UTF8"
       # Descomenta la siguiente línea si te da un error de conexión desde QGIS que dice algo como
       # "... no pg_hba.conf entry for host "172.x.x.x", ..., SSL off"
       - "ALLOW_IP_RANGE=172.0.0.0/8"
     volumes:
       - dbdata:/var/lib/postgresql      
+      - "./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql"
+      - "./sql/fill_tables_planta0.sql:/docker-entrypoint-initdb.d/fill_tables_0.sql"
 volumes:
     dbdata:
         external: true    

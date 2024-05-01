@@ -3,6 +3,8 @@ package unizar.labis.g03.backendapp.model.entities
 import jakarta.persistence.*
 import lombok.Setter
 import lombok.Getter
+import org.hibernate.annotations.DynamicInsert
+import org.hibernate.annotations.DynamicUpdate
 import unizar.labis.g03.backendapp.model.valueObjects.Horario
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 
@@ -10,19 +12,27 @@ import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 @Entity
 @Setter
 @Getter
+@DynamicInsert
+@DynamicUpdate
 class Espacio (
     @Id
     private val id: String,
+    @Column(nullable = true)
     private val tamano: Float,
     @Enumerated(EnumType.STRING)
     private val tipoEspacio: TipoEspacio,
     @Enumerated(EnumType.STRING)
     private var categoriaReserva: TipoEspacio,
+    @Column(nullable = true)
     private val numMaxOcupantes: Int,
+    @Column(nullable = true)
     private val planta: Int,
+    @Column(nullable = true)
     private var reservable: Boolean,
     @Embedded
-    private var horario: Horario,
+    @Column(nullable = true)
+    private var horario: Horario?,
+    @Column(nullable = true)
     private var porcentajeUsoMaximo: Int
 )
 
@@ -42,8 +52,12 @@ class Espacio (
         this.horario = horario
     }
     fun getHorario(): Horario{
-        return horario
+        if (horario == null){
+            return Horario.horarioDefecto()
+        }
+        return horario as Horario
     }
+
     fun setPorcentajeUsoMaximo (nuevoPorcentaje: Int){
         porcentajeUsoMaximo = nuevoPorcentaje
     }

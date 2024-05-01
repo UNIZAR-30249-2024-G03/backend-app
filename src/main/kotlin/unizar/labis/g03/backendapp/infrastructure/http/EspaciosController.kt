@@ -28,7 +28,7 @@ class EspaciosController(
         @Parameter(name = "id", description = "Identificador del espacio que se desea buscar", example = "72") @RequestParam(required = false) id : String?,
         @Parameter(name = "planta", description = "Planta en la que se encuentra el espacio que se desea buscar", example = "2") @RequestParam(required = false) planta: Int?,
         @Parameter(name = "numMaxOcupantes", description = "Número de ocupantes máximos que tiene el espacio que se desea buscar", example = "150") @RequestParam(required = false) numMaxOcupantes : Int?,
-        @Parameter(name = "categoriaReserva", description = "Indica la categoría de reserva del espacio que se desea buscar", example = "Aula") @RequestParam(required = false) categoriaReserva: TipoEspacio?
+        @Parameter(name = "categoriaReserva", description = "Indica la categoría de reserva del espacio que se desea buscar", example = "AULA") @RequestParam(required = false) categoriaReserva: TipoEspacio?
     ): List<Espacio> {
         return buscarEspacioService.buscarEspacio(id, categoriaReserva, numMaxOcupantes, planta)
     }

@@ -49,11 +49,11 @@ class DataLoader : CommandLineRunner {
             Reserva(id = null, persona = personas[0], espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20)),
             Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20))
         )
-        personaRepository?.saveAll(personas)
+        //personaRepository?.saveAll(personas)
 
-        espacioRepository?.saveAll(espacios)
+        //espacioRepository?.saveAll(espacios)
 
-        reservaRepository?.saveAll(reservas)
+        //reservaRepository?.saveAll(reservas)
 
         val personasGuardadas = personaRepository?.findAll()
         println("Personas guardadas: $personasGuardadas")
