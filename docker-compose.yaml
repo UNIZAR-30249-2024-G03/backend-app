@@ -15,7 +15,12 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql      
       - "./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql"
+      - "./sql/create_views.sql:/docker-entrypoint-initdb.d/create_views.sql"
       - "./sql/fill_tables_planta0.sql:/docker-entrypoint-initdb.d/fill_tables_0.sql"
+      - "./sql/fill_tables_planta1.sql:/docker-entrypoint-initdb.d/fill_tables_1.sql"
+      - "./sql/fill_tables_planta2.sql:/docker-entrypoint-initdb.d/fill_tables_2.sql"
+      - "./sql/fill_tables_planta3.sql:/docker-entrypoint-initdb.d/fill_tables_3.sql"
+      - "./sql/fill_tables_planta4.sql:/docker-entrypoint-initdb.d/fill_tables_4.sql"
 volumes:
     dbdata:
         external: true    
