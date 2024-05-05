@@ -30,7 +30,11 @@ CREATE TABLE public.espacio (
 	porcentaje_uso_maximo int4 NULL,
 	reservable bool NULL,
 	tamano float4 NULL,
-	CONSTRAINT espacio_categoria_reserva_check CHECK (((categoria_reserva)::text = ANY ((ARRAY['AULA'::character varying, 'SEMINARIO'::character varying, 'LABORATORIO'::character varying, 'DESPACHO'::character varying, 'SALA_COMUN'::character varying])::text[]))),
+	departamento varchar(255) NULL,
+	tipo_entidad varchar(255) NULL,
+	CONSTRAINT espacio_categoria_reserva_check CHECK (((categoria_reserva)::text = ANY (ARRAY[('AULA'::character varying)::text, ('SEMINARIO'::character varying)::text, ('LABORATORIO'::character varying)::text, ('DESPACHO'::character varying)::text, ('SALA_COMUN'::character varying)::text]))),
+	CONSTRAINT espacio_departamento_check CHECK (((departamento)::text = ANY ((ARRAY['Informatica_e_Ingenieria_de_sistemas'::character varying, 'Ingenieria_electronica_y_comunicaciones'::character varying])::text[]))),
 	CONSTRAINT espacio_pk PRIMARY KEY (id),
-	CONSTRAINT espacio_tipo_espacio_check CHECK (((tipo_espacio)::text = ANY ((ARRAY['AULA'::character varying, 'SEMINARIO'::character varying, 'LABORATORIO'::character varying, 'DESPACHO'::character varying, 'SALA_COMUN'::character varying])::text[])))
+	CONSTRAINT espacio_tipo_entidad_check CHECK (((tipo_entidad)::text = ANY ((ARRAY['EINA'::character varying, 'DEPARTAMENTO'::character varying, 'PERSONAS'::character varying])::text[]))),
+	CONSTRAINT espacio_tipo_espacio_check CHECK (((tipo_espacio)::text = ANY (ARRAY[('AULA'::character varying)::text, ('SEMINARIO'::character varying)::text, ('LABORATORIO'::character varying)::text, ('DESPACHO'::character varying)::text, ('SALA_COMUN'::character varying)::text])))
 );

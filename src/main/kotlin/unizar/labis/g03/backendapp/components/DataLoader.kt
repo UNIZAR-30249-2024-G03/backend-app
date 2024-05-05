@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component
 import unizar.labis.g03.backendapp.model.entities.Espacio
 import unizar.labis.g03.backendapp.model.entities.Persona
 import unizar.labis.g03.backendapp.model.entities.Reserva
-import unizar.labis.g03.backendapp.model.valueObjects.Horario
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
-import unizar.labis.g03.backendapp.model.valueObjects.Rol
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.model.valueObjects.*
 import unizar.labis.g03.backendapp.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.repositories.ReservaRepository
@@ -40,16 +37,17 @@ class DataLoader : CommandLineRunner {
             Persona(email = "persona5@example.com", nombre = "Nombre5", apellido = "Apellido5"),
             gerente
         )
+
         val espacios = listOf(
-            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.AULA, categoriaReserva = TipoEspacio.AULA, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100),
-            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.LABORATORIO, categoriaReserva = TipoEspacio.LABORATORIO, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100)
+            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.AULA, categoriaReserva = TipoEspacio.AULA, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100, entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA)),
+            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.LABORATORIO, categoriaReserva = TipoEspacio.LABORATORIO, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100, entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
         )
 
         val reservas = listOf(
             Reserva(id = null, persona = personas[0], espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20)),
             Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20))
         )
-        //personaRepository?.saveAll(personas)
+        personaRepository?.saveAll(personas)
 
         //espacioRepository?.saveAll(espacios)
 

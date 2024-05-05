@@ -5,9 +5,7 @@ import lombok.Setter
 import lombok.Getter
 import org.hibernate.annotations.DynamicInsert
 import org.hibernate.annotations.DynamicUpdate
-import unizar.labis.g03.backendapp.model.valueObjects.Horario
-import unizar.labis.g03.backendapp.model.valueObjects.PorcentajeUsoDefecto
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.model.valueObjects.*
 
 
 @Entity
@@ -34,7 +32,11 @@ class Espacio (
     @Column(nullable = true)
     private var horario: Horario?,
     @Column(nullable = true)
-    private var porcentajeUsoMaximo: Int?
+    private var porcentajeUsoMaximo: Int?,
+    @Embedded
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private var entidadAsignada: EntidadAsignableEspacio?,
 )
 
 {
@@ -49,7 +51,7 @@ class Espacio (
         return tamano
     }
 
-    fun setHorario(horario: Horario){
+    fun setHorario(horario: Horario?){
         this.horario = horario
     }
     fun getHorario(): Horario{
@@ -59,7 +61,7 @@ class Espacio (
         return horario as Horario
     }
 
-    fun setPorcentajeUsoMaximo (nuevoPorcentaje: Int){
+    fun setPorcentajeUsoMaximo (nuevoPorcentaje: Int?){
         porcentajeUsoMaximo = nuevoPorcentaje
     }
     fun getPorcentajeUsoMaximo(): Int{
@@ -81,8 +83,24 @@ class Espacio (
         return categoriaReserva
     }
 
+    fun getEntidadAsignada(): EntidadAsignableEspacio?{
+        return entidadAsignada
+    }
+
+    fun asignarEina(){
+        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA)
+    }
+
+    fun asignarDepartamento(departamento: Departamento){
+        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.DEPARTAMENTO, departamento)
+    }
+
+    fun asignarPersonas(personas: List<Persona>){
+        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.PERSONAS, personas = personas)
+    }
+
     override fun toString(): String {
-        return "Espacio(id='$id', tamano=$tamano, tipoEspacio=$tipoEspacio, categoriaReserva=$categoriaReserva, numMaxOcupantes=$numMaxOcupantes, planta=$planta, reservable=$reservable, horario=$horario, porcentajeUsoMaximo=$porcentajeUsoMaximo)"
+        return "Espacio(id='$id', tamano=$tamano, tipoEspacio=$tipoEspacio, categoriaReserva=$categoriaReserva, numMaxOcupantes=$numMaxOcupantes, planta=$planta, reservable=$reservable, horario=$horario, porcentajeUsoMaximo=$porcentajeUsoMaximo, entidadAsignada=$entidadAsignada)"
     }
 
 }

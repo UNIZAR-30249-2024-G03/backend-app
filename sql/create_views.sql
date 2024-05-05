@@ -25,7 +25,12 @@ AS SELECT geom,
     planta,
     porcentaje_uso_maximo,
     reservable,
-    tamano
+    tamano,
+    tipo_entidad,
+    departamento,
+    ( SELECT ARRAY( SELECT ep.personas_email
+                   FROM espacio_personas ep
+                  WHERE e.id::text = ep.espacio_id::text) AS personas) AS personas
    FROM espacio e
   WHERE planta = 0;
 
@@ -57,7 +62,12 @@ AS SELECT geom,
     planta,
     porcentaje_uso_maximo,
     reservable,
-    tamano
+    tamano,
+    tipo_entidad,
+    departamento,
+    ( SELECT ARRAY( SELECT ep.personas_email
+                   FROM espacio_personas ep
+                  WHERE e.id::text = ep.espacio_id::text) AS personas) AS personas
    FROM espacio e
   WHERE planta = 1;
 
@@ -89,7 +99,12 @@ AS SELECT geom,
     planta,
     porcentaje_uso_maximo,
     reservable,
-    tamano
+    tamano,
+    tipo_entidad,
+    departamento,
+    ( SELECT ARRAY( SELECT ep.personas_email
+                   FROM espacio_personas ep
+                  WHERE e.id::text = ep.espacio_id::text) AS personas) AS personas
    FROM espacio e
   WHERE planta = 2;
 
@@ -121,7 +136,12 @@ AS SELECT geom,
     planta,
     porcentaje_uso_maximo,
     reservable,
-    tamano
+    tamano,
+    tipo_entidad,
+    departamento,
+    ( SELECT ARRAY( SELECT ep.personas_email
+                   FROM espacio_personas ep
+                  WHERE e.id::text = ep.espacio_id::text) AS personas) AS personas
    FROM espacio e
   WHERE planta = 3;
 
@@ -153,6 +173,11 @@ AS SELECT geom,
     planta,
     porcentaje_uso_maximo,
     reservable,
-    tamano
+    tamano,
+    tipo_entidad,
+    departamento,
+    ( SELECT ARRAY( SELECT ep.personas_email
+                   FROM espacio_personas ep
+                  WHERE e.id::text = ep.espacio_id::text) AS personas) AS personas
    FROM espacio e
   WHERE planta = 4;

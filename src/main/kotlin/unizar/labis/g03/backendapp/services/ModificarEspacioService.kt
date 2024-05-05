@@ -7,6 +7,7 @@ import unizar.labis.g03.backendapp.model.DTO.EspacioDTO
 import unizar.labis.g03.backendapp.model.entities.Espacio
 import unizar.labis.g03.backendapp.model.entities.Persona
 import unizar.labis.g03.backendapp.model.valueObjects.Horario
+import unizar.labis.g03.backendapp.model.valueObjects.TipoEntidadAsignableEspacio
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 import unizar.labis.g03.backendapp.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.repositories.PersonaRepository
@@ -30,6 +31,21 @@ class ModificarEspacioService @Autowired constructor(private val espacioReposito
             espacioModificado.setCategoriaReserva(getCategoria(espacioDTO.getCategoria()))
             espacioModificado.setHorario(getHorario(espacioDTO.getHoraInicio(), espacioDTO.getHoraFinal()))
             espacioModificado.setPorcentajeUsoMaximo(espacioDTO.getPorcentajeMaximoPermitido())
+            when(espacioDTO.getEntidadAsignada()){
+                TipoEntidadAsignableEspacio.EINA -> espacioModificado.asignarEina()
+                TipoEntidadAsignableEspacio.DEPARTAMENTO -> espacioModificado.asignarDepartamento(espacioDTO.getDepartamentoAsignado()!!)
+                TipoEntidadAsignableEspacio.PERSONAS -> {
+                    if (espacioDTO.getPersonasAsignadas() != null){
+                        val personasAsignadas : List<Persona> = espacioDTO.getPersonasAsignadas()!!
+                            .mapNotNull { email ->
+                                if (personaRepository.findByEmail(email).isEmpty) null
+                                else personaRepository.findByEmail(email).get()
+                            }
+                        espacioModificado.asignarPersonas(personasAsignadas)
+                    }
+                }
+            }
+
             espacioRepository.save(espacioModificado)
             return Optional.of(espacioModificado)
         }
@@ -37,8 +53,9 @@ class ModificarEspacioService @Autowired constructor(private val espacioReposito
 
     }
 
-    fun getHorario(horaInicio: Int, horaFinal:Int ): Horario {
-        return Horario(horaInicio, horaFinal)
+    fun getHorario(horaInicio: Int?, horaFinal:Int? ): Horario? {
+        if (horaInicio != null && horaFinal != null) return Horario(horaInicio, horaFinal)
+        else return null
     }
     fun getCategoria(categoria : String): TipoEspacio {
         return TipoEspacio.valueOf(categoria)
