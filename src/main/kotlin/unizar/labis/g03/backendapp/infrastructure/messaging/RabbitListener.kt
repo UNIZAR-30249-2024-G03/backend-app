@@ -14,13 +14,13 @@ import org.springframework.amqp.support.converter.MessageConverter
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.util.MimeTypeUtils
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.entities.Persona
-import unizar.labis.g03.backendapp.model.entities.Reserva
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
-import unizar.labis.g03.backendapp.model.valueObjects.Rol
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
+import unizar.labis.g03.backendapp.domain.model.entities.Persona
+import unizar.labis.g03.backendapp.domain.model.entities.Reserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
+import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoEspacio
 
 
 @Component

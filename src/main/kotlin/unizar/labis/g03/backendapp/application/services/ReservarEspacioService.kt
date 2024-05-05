@@ -1,14 +1,14 @@
-package unizar.labis.g03.backendapp.services
+package unizar.labis.g03.backendapp.application.services
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import unizar.labis.g03.backendapp.model.DTO.ReservaDTO
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.entities.Reserva
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
-import unizar.labis.g03.backendapp.repositories.EspacioRepository
-import unizar.labis.g03.backendapp.repositories.PersonaRepository
-import unizar.labis.g03.backendapp.repositories.ReservaRepository
+import unizar.labis.g03.backendapp.domain.model.DTO.ReservaDTO
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
+import unizar.labis.g03.backendapp.domain.model.entities.Reserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.domain.repositories.EspacioRepository
+import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
+import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
 import java.util.Optional
 
 @Service

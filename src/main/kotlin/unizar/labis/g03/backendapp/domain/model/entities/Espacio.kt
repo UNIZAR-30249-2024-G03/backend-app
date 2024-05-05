@@ -1,11 +1,11 @@
-package unizar.labis.g03.backendapp.model.entities
+package unizar.labis.g03.backendapp.domain.model.entities
 
 import jakarta.persistence.*
 import lombok.Setter
 import lombok.Getter
 import org.hibernate.annotations.DynamicInsert
 import org.hibernate.annotations.DynamicUpdate
-import unizar.labis.g03.backendapp.model.valueObjects.*
+import unizar.labis.g03.backendapp.domain.model.valueObjects.*
 
 
 @Entity
@@ -54,7 +54,7 @@ class Espacio (
     fun setHorario(horario: Horario?){
         this.horario = horario
     }
-    fun getHorario(): Horario{
+    fun getHorario(): Horario {
         if (horario == null){
             return Horario.horarioDefecto()
         }

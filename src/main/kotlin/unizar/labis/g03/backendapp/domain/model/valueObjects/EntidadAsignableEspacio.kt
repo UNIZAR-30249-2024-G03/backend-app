@@ -1,7 +1,7 @@
-package unizar.labis.g03.backendapp.model.valueObjects
+package unizar.labis.g03.backendapp.domain.model.valueObjects
 
 import jakarta.persistence.*
-import unizar.labis.g03.backendapp.model.entities.Persona
+import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import java.util.Optional
 
 enum class TipoEntidadAsignableEspacio{
@@ -19,7 +19,7 @@ class EntidadAsignableEspacio(
 ){
     constructor() : this(TipoEntidadAsignableEspacio.EINA)
 
-    fun getTipo(): TipoEntidadAsignableEspacio{
+    fun getTipo(): TipoEntidadAsignableEspacio {
         return tipoEntidad
     }
 

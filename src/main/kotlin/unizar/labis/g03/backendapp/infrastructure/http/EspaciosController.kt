@@ -8,14 +8,14 @@ import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import unizar.labis.g03.backendapp.infrastructure.http.types.EspacioOut
-import unizar.labis.g03.backendapp.model.DTO.EspacioDTO
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento
-import unizar.labis.g03.backendapp.model.valueObjects.EntidadAsignableEspacio
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEntidadAsignableEspacio
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
-import unizar.labis.g03.backendapp.services.BuscarEspacioService
-import unizar.labis.g03.backendapp.services.ModificarEspacioService
+import unizar.labis.g03.backendapp.domain.model.DTO.EspacioDTO
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
+import unizar.labis.g03.backendapp.domain.model.valueObjects.EntidadAsignableEspacio
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoEntidadAsignableEspacio
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.application.services.BuscarEspacioService
+import unizar.labis.g03.backendapp.application.services.ModificarEspacioService
 import java.util.*
 
 @RestController
@@ -51,7 +51,8 @@ class EspaciosController(
                       @Parameter(name = "tipoEntidadAsignableEspacio", description = "Indica el tipo de entidad que desea asignar al espacio", example = "EINA") @RequestParam(required = true) tipoEntidadAsignableEspacio: TipoEntidadAsignableEspacio,
                       @Parameter(name = "departamentoAsignado", description = "Indica el departamento al que desea asignar al espacio") @RequestParam(required = false) departamentoAsignado: Departamento?,
                       @Parameter(name = "personasAsignadas", description = "Indica los emails de las personas a las que desea asignar al espacio") @RequestParam(required = false) personasAsignadas: List<String>?) : ResponseEntity<Espacio> {
-        val espacio = modificarEspacioService.modificarEspacio(EspacioDTO(idEspacio, reservable, categoriaReserva.toString(), horarioInicioReservaDisponible, horarioFinalReservaDisponible, porcentajeUsoMaximo,
+        val espacio = modificarEspacioService.modificarEspacio(
+            EspacioDTO(idEspacio, reservable, categoriaReserva.toString(), horarioInicioReservaDisponible, horarioFinalReservaDisponible, porcentajeUsoMaximo,
              tipoEntidadAsignableEspacio, departamentoAsignado, personasAsignadas),idUsuario)
 
         return if (espacio.isPresent) ResponseEntity.ok().body(espacio.get())

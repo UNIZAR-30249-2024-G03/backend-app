@@ -3,13 +3,13 @@ package unizar.labis.g03.backendapp.components
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.entities.Persona
-import unizar.labis.g03.backendapp.model.entities.Reserva
-import unizar.labis.g03.backendapp.model.valueObjects.*
-import unizar.labis.g03.backendapp.repositories.EspacioRepository
-import unizar.labis.g03.backendapp.repositories.PersonaRepository
-import unizar.labis.g03.backendapp.repositories.ReservaRepository
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
+import unizar.labis.g03.backendapp.domain.model.entities.Persona
+import unizar.labis.g03.backendapp.domain.model.entities.Reserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.*
+import unizar.labis.g03.backendapp.domain.repositories.EspacioRepository
+import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
+import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
 import java.time.LocalDateTime
 
 @Component
@@ -39,8 +39,12 @@ class DataLoader : CommandLineRunner {
         )
 
         val espacios = listOf(
-            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.AULA, categoriaReserva = TipoEspacio.AULA, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100, entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA)),
-            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.LABORATORIO, categoriaReserva = TipoEspacio.LABORATORIO, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100, entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
+            Espacio(id = "espacio1",tamano = 4f, tipoEspacio = TipoEspacio.AULA, categoriaReserva = TipoEspacio.AULA, numMaxOcupantes = 1, reservable = true, planta = 2, horario = Horario(10,20), porcentajeUsoMaximo = 100, entidadAsignada = EntidadAsignableEspacio(
+                TipoEntidadAsignableEspacio.EINA)
+            ),
+            Espacio(id = "espacio2",tamano = 8f, tipoEspacio = TipoEspacio.LABORATORIO, categoriaReserva = TipoEspacio.LABORATORIO, numMaxOcupantes = 25, reservable = true, planta = 1, horario = Horario(10,20), porcentajeUsoMaximo = 100, entidadAsignada = EntidadAsignableEspacio(
+                TipoEntidadAsignableEspacio.EINA)
+            )
         )
 
         val reservas = listOf(

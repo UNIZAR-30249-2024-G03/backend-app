@@ -1,10 +1,10 @@
-package unizar.labis.g03.backendapp.model.DTO
+package unizar.labis.g03.backendapp.domain.model.DTO
 
 import lombok.Getter
-import unizar.labis.g03.backendapp.model.entities.Persona
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento
-import unizar.labis.g03.backendapp.model.valueObjects.EntidadAsignableEspacio
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEntidadAsignableEspacio
+import unizar.labis.g03.backendapp.domain.model.entities.Persona
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
+import unizar.labis.g03.backendapp.domain.model.valueObjects.EntidadAsignableEspacio
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoEntidadAsignableEspacio
 
 class EspacioDTO(
     private val idEspacio: String,
@@ -36,7 +36,7 @@ class EspacioDTO(
         return porcentajeMaximoPermitido
     }
 
-    fun getEntidadAsignada(): TipoEntidadAsignableEspacio{
+    fun getEntidadAsignada(): TipoEntidadAsignableEspacio {
         return entidadAsignada
     }
 

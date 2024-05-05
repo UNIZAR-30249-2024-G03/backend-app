@@ -1,11 +1,11 @@
-package unizar.labis.g03.backendapp.services;
+package unizar.labis.g03.backendapp.application.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unizar.labis.g03.backendapp.model.entities.Persona;
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento;
-import unizar.labis.g03.backendapp.model.valueObjects.Rol;
-import unizar.labis.g03.backendapp.repositories.PersonaRepository;
+import unizar.labis.g03.backendapp.domain.model.entities.Persona;
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento;
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol;
+import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository;
 
 import java.util.Set;
 

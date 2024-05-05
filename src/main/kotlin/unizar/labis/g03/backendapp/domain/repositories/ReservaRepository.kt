@@ -1,12 +1,12 @@
-package unizar.labis.g03.backendapp.repositories
+package unizar.labis.g03.backendapp.domain.repositories
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.entities.Persona
-import unizar.labis.g03.backendapp.model.entities.Reserva
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
+import unizar.labis.g03.backendapp.domain.model.entities.Persona
+import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import java.time.LocalDateTime
 
 

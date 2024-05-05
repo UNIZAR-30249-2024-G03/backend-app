@@ -1,7 +1,7 @@
-package unizar.labis.g03.backendapp.model.entities
+package unizar.labis.g03.backendapp.domain.model.entities
 
 import jakarta.persistence.*
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
 
 @Entity
 class Reserva(

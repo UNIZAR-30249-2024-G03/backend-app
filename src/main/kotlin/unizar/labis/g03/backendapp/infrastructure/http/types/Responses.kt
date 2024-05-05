@@ -1,9 +1,9 @@
 package unizar.labis.g03.backendapp.infrastructure.http.types
 
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
-import unizar.labis.g03.backendapp.model.valueObjects.Rol
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
+import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoEspacio
 
 
 class EspacioOut(

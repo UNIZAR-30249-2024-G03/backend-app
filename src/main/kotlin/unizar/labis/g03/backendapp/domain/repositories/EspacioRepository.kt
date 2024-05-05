@@ -1,10 +1,10 @@
-package unizar.labis.g03.backendapp.repositories
+package unizar.labis.g03.backendapp.domain.repositories
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
-import unizar.labis.g03.backendapp.model.entities.Espacio
-import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoEspacio
 
 interface EspacioRepository : JpaRepository<Espacio, String?> {
     @Query(

@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.*
 import unizar.labis.g03.backendapp.infrastructure.http.types.EspacioOut
 import unizar.labis.g03.backendapp.infrastructure.http.types.PersonaOut
 import unizar.labis.g03.backendapp.infrastructure.http.types.ReservaOut
-import unizar.labis.g03.backendapp.model.entities.Reserva
-import unizar.labis.g03.backendapp.model.valueObjects.*
-import unizar.labis.g03.backendapp.services.AnularReservaService
-import unizar.labis.g03.backendapp.services.ConsultarReservasService
+import unizar.labis.g03.backendapp.domain.model.entities.Reserva
+import unizar.labis.g03.backendapp.application.services.AnularReservaService
+import unizar.labis.g03.backendapp.application.services.ConsultarReservasService
+import unizar.labis.g03.backendapp.domain.model.valueObjects.*
 import java.util.*
 import kotlin.collections.HashSet
 
 @RestController
 class ReservasController(
     private val consultarReservasService: ConsultarReservasService,
-    private val anularReservaService: AnularReservaService){
+    private val anularReservaService: AnularReservaService
+){
     @Operation(
         summary = "Permite a un usuario con rol de gerente obtener todas las reservas vivas del sistema",
         description = "Obtiene una lista con todas las Reservas vivas del sistema asociadas si el usuario con id 'idUsuario' tiene rol de gerente .")
@@ -42,7 +43,7 @@ class ReservasController(
 
         val reserva = ReservaOut(
             "idReserva",
-            PersonaOut("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(),Departamento.Informatica_e_Ingenieria_de_sistemas),
+            PersonaOut("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(), Departamento.Informatica_e_Ingenieria_de_sistemas),
             EspacioOut("idEspacio", 10f, TipoEspacio.AULA, TipoEspacio.AULA, 5, 1, true, 100),
             InfoReserva()
         )

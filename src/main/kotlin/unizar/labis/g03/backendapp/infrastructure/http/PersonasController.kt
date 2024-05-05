@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import unizar.labis.g03.backendapp.infrastructure.http.types.PersonaOut
-import unizar.labis.g03.backendapp.model.entities.Persona
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento
-import unizar.labis.g03.backendapp.model.valueObjects.Rol
+import unizar.labis.g03.backendapp.domain.model.entities.Persona
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
 
 @RestController
 class PersonasController {

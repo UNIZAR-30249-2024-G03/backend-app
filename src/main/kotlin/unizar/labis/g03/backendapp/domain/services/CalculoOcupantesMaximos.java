@@ -1,6 +1,6 @@
-package unizar.labis.g03.backendapp.services;
+package unizar.labis.g03.backendapp.domain.services;
 
-import unizar.labis.g03.backendapp.model.entities.Espacio;
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio;
 
 import java.util.List;
 

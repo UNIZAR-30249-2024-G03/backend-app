@@ -1,8 +1,8 @@
-package unizar.labis.g03.backendapp.model.entities
+package unizar.labis.g03.backendapp.domain.model.entities
 
 import jakarta.persistence.*
-import unizar.labis.g03.backendapp.model.valueObjects.Rol
-import unizar.labis.g03.backendapp.model.valueObjects.Departamento
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
+import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
 
 @Entity
 @Table(name = "personas")

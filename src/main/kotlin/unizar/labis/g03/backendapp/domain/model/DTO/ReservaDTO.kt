@@ -1,7 +1,7 @@
-package unizar.labis.g03.backendapp.model.DTO
+package unizar.labis.g03.backendapp.domain.model.DTO
 
 import lombok.Getter
-import unizar.labis.g03.backendapp.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
 import java.time.LocalDateTime
 
 class ReservaDTO // Constructor
