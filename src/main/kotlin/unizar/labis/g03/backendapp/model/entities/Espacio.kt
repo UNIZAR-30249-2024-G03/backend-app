@@ -6,6 +6,7 @@ import lombok.Getter
 import org.hibernate.annotations.DynamicInsert
 import org.hibernate.annotations.DynamicUpdate
 import unizar.labis.g03.backendapp.model.valueObjects.Horario
+import unizar.labis.g03.backendapp.model.valueObjects.PorcentajeUsoDefecto
 import unizar.labis.g03.backendapp.model.valueObjects.TipoEspacio
 
 
@@ -33,7 +34,7 @@ class Espacio (
     @Column(nullable = true)
     private var horario: Horario?,
     @Column(nullable = true)
-    private var porcentajeUsoMaximo: Int
+    private var porcentajeUsoMaximo: Int?
 )
 
 {
@@ -62,10 +63,11 @@ class Espacio (
         porcentajeUsoMaximo = nuevoPorcentaje
     }
     fun getPorcentajeUsoMaximo(): Int{
-        return porcentajeUsoMaximo
+        return porcentajeUsoMaximo ?: PorcentajeUsoDefecto.getPorcentaje()
     }
     fun getCapacidadMaxima(): Int {
-        return ((numMaxOcupantes.toDouble() / porcentajeUsoMaximo) * 100).toInt()
+        val porcentajeReal = porcentajeUsoMaximo ?: PorcentajeUsoDefecto.getPorcentaje()
+        return ((numMaxOcupantes.toDouble() / porcentajeReal) * 100).toInt()
     }
 
     fun setReservable(reservable: Boolean) {
