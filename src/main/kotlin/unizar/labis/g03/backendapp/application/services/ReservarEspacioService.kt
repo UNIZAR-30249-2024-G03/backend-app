@@ -21,32 +21,21 @@ class ReservarEspacioService @Autowired constructor(
     fun reservarEspacios(reservaDTO: ReservaDTO): Optional<Reserva> {
         val reserva = buildReserva(reservaDTO)
         val infoReserva = reserva.infoReserva
+        val gerente = reserva.persona.esGerente()
+        val reservasConflictivas: MutableList<Reserva> = mutableListOf()
+
         for (espacio in reserva.espacios) {
-            if (!espacio.getReservable()) {
-                //Espacio no reservable
+            if (!espacio.getReservable()  &&
+                !espacio.getHorario().estaDentro(infoReserva.getHoraInicio(), infoReserva.getHoraFinal())) {
+                //Return no  se puede hacer la reserva.
             }
-            if (espacio.getHorario().estaDentro(infoReserva.getHoraInicio(), infoReserva.getHoraFinal())) {
-                // Horario no disponible
-            }
-            val reservasConflictivas = reservaRepository.encontrarReservasConflictivas(
-                espacio.getId(),
-                infoReserva.fechaInicio,
-                infoReserva.fechaFinal
-            ) //Espacio no esta reservado
-            if (reservasConflictivas.isNotEmpty()) {
-                //Si no es gerente
-                if (reserva.persona.esGerente()) {
-                    borrarReservasConflictivas(reservasConflictivas)
-                    //save?
-                }
+            reservasConflictivas.addAll(reservaRepository.encontrarReservasConflictivas(
+                espacio.getId(), infoReserva.fechaInicio, infoReserva.fechaFinal)) //Espacio no esta reservado
+            if (reservasConflictivas.isEmpty() && !gerente) {
+               //Return no se puede hacer la reserva.
             }
         }
-
-
-        //Construimos el objeto reserva a partir del DTO recibido
-
         //Comprobamos que la reserva cumple con la politica de reservas
-
         //Guardamos la reserva en la base de datos
         reservaRepository.save(reserva)
         return Optional.of(reserva)

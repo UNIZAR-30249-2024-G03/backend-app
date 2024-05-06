@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 
 
 interface ReservaRepository : JpaRepository<Reserva?, String?> {
-    @Query("SELECT r FROM Reserva r JOIN r.espacios e WHERE e.id = :id AND r.infoReserva.fechaInicio <= :horaInicio AND r.infoReserva.fechaFinal >= :horaFinal AND r.anulado = false")
+    @Query("SELECT r FROM Reserva r JOIN r.espacios e WHERE e.id = :id AND r.infoReserva.fechaInicio <= :horaFinal AND r.infoReserva.fechaFinal >= :horaInicio AND r.anulado = false")
     fun encontrarReservasConflictivas(
         @Param("id") id: String,
         @Param("horaInicio") horaInicio: LocalDateTime,

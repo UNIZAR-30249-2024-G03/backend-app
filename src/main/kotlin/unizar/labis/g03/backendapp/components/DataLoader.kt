@@ -26,7 +26,6 @@ class DataLoader : CommandLineRunner {
     }
 
     private fun cargarDatosDePrueba() {
-        println("HOla mundo!")
         val gerente = Persona(email = "gerente@gmail.com", nombre = "Gerente", apellido = "Gerentioso")
         gerente.setRoles(setOf(Rol.Gerente))
         val personas = listOf(
@@ -53,7 +52,7 @@ class DataLoader : CommandLineRunner {
         )
         personaRepository?.saveAll(personas)
 
-        //espacioRepository?.saveAll(espacios)
+        //  espacioRepository?.saveAll(espacios)
 
         //reservaRepository?.saveAll(reservas)
 

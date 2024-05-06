@@ -25,4 +25,8 @@ class InfoReserva {
     fun getHoraFinal(): Int{
         return fechaFinal.hour;
     }
+
+    override fun toString(): String {
+        return "InfoReserva(numeroPersonas=$numeroPersonas, fechaInicio=$fechaInicio, fechaFinal=$fechaFinal, descripcion='$descripcion', maximaCapacidad=$maximaCapacidad)"
+    }
 }

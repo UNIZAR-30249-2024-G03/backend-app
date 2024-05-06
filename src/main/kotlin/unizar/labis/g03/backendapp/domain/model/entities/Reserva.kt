@@ -24,7 +24,7 @@ class Reserva(
 
      */
     override fun toString(): String {
-        return "Reserva(id=$id, persona=$persona, espacios=$espacios, infoReserva=$infoReserva, anulado=$anulado)"
+        return "Reserva(id=$id, persona=$persona, espacios=$espacios, infoReserva=${infoReserva.toString()}, anulado=$anulado)"
     }
 
 }
