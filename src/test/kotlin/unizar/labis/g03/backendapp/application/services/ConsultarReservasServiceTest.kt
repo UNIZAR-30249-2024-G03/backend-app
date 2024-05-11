@@ -35,7 +35,7 @@ class ConsultarReservasServiceTest {
     val fechaFinal = fechahComienzo.plusHours(2)
     val propietarioReserva = Persona("Paco", "Martinez", "paco@gmail.com", mutableSetOf(Rol.Estudiante))
     val gerente = Persona("Gerente", "Gerencioso", "gerente@gmail.com", mutableSetOf(Rol.Gerente))
-    val reserva = Reserva(id = 1, persona = propietarioReserva, infoReserva = InfoReserva(10, fechahComienzo, fechaFinal, "descripcion", 10))
+    val reserva = Reserva(id = 1, persona = propietarioReserva, infoReserva = InfoReserva(fechahComienzo, fechaFinal, "descripcion", 10,20))
 
     companion object {
         @BeforeAll

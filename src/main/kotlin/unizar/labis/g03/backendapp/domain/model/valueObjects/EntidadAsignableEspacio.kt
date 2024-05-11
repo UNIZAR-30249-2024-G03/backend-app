@@ -17,7 +17,11 @@ class EntidadAsignableEspacio(
     @OneToMany(fetch = FetchType.EAGER)
     private val personas : List<Persona>?
 ){
-    constructor(tipoEntidad: TipoEntidadAsignableEspacio) : this(tipoEntidad, null, null)
+    constructor(tipoEntidad: TipoEntidadAsignableEspacio) : this(tipoEntidad, null, null){
+        require(tipoEntidad == TipoEntidadAsignableEspacio.EINA) {
+            "El departamento no puede ser nulo cuando el tipo de entidad es DEPARTAMENTO"
+        }
+    }
     constructor(tipoEntidad: TipoEntidadAsignableEspacio, departamento: Departamento?) : this(tipoEntidad, departamento, null) {
         require(tipoEntidad != TipoEntidadAsignableEspacio.DEPARTAMENTO || departamento != null) {
             "El departamento no puede ser nulo cuando el tipo de entidad es DEPARTAMENTO"

@@ -37,7 +37,6 @@ class ReservarEspacioService @Autowired constructor(
             if (reservasConflictivas.isNotEmpty() && !reserva.persona.esGerente()) {
                throw Exception(ESPACIO_NO_DISPONIBLE)
             }
-
         }
         //Borramos las reservas conflictivas si existen.
         if(reservasConflictivas.isNotEmpty()){

@@ -35,7 +35,7 @@ class ModificarEspacioServiceTest {
     val estudiante = Persona("Paco", "Martinez", "paco@gmail.com", mutableSetOf(Rol.Estudiante))
     val profesor = Persona("Profe", "Profesado", "profe@gmail.com", mutableSetOf(Rol.Docente_investigador))
     val gerente = Persona("Gerente", "Gerencioso", "gerente@gmail.com", mutableSetOf(Rol.Gerente))
-    val espacio = Espacio("idEspacio", 20f, TipoEspacio.AULA, TipoEspacio.AULA, 10, 0, true, Horario(), null, EntidadAsignableEspacio())
+    val espacio = Espacio("idEspacio", 20f, TipoEspacio.AULA, TipoEspacio.AULA, 10, 0, true, Horario(), null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
     val espacioEinaDTO = EspacioDTO("idEspacio", true, TipoEspacio.AULA.toString(), 10, 20, 100, TipoEntidadAsignableEspacio.EINA)
     val espacioDepartamentoDTO = EspacioDTO("idEspacio", true, TipoEspacio.AULA.toString(), 10, 20, 100, TipoEntidadAsignableEspacio.DEPARTAMENTO, Departamento.Informatica_e_Ingenieria_de_sistemas)
     val espacioPersonasDTO = EspacioDTO("idEspacio", true, TipoEspacio.AULA.toString(), 10, 20, 100, TipoEntidadAsignableEspacio.PERSONAS, null, listOf("profe@gmail.com"))

@@ -14,13 +14,13 @@ class PoliticaDeReservasTests {
     val gerente = Persona("Gerente", "Gerenciano", "gerente@gmail.com", mutableSetOf(Rol.Gerente))
 
     val aula = Espacio("aula", 10f, TipoEspacio.AULA, TipoEspacio.AULA, 10, 0, true, null, null, null)
-    val seminarioEina = Espacio("seminario-eina", 10f, TipoEspacio.SEMINARIO, TipoEspacio.SEMINARIO, 10, 0, true, null, null, EntidadAsignableEspacio())
+    val seminarioEina = Espacio("seminario-eina", 10f, TipoEspacio.SEMINARIO, TipoEspacio.SEMINARIO, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
     val seminarioDptoInformatica = Espacio("seminario-informatica", 10f, TipoEspacio.SEMINARIO, TipoEspacio.SEMINARIO, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.DEPARTAMENTO, Departamento.Informatica_e_Ingenieria_de_sistemas))
-    val laboratorioEina = Espacio("laboratorio-eina", 10f, TipoEspacio.LABORATORIO, TipoEspacio.LABORATORIO, 10, 0, true, null, null, EntidadAsignableEspacio())
+    val laboratorioEina = Espacio("laboratorio-eina", 10f, TipoEspacio.LABORATORIO, TipoEspacio.LABORATORIO, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
     val laboratorioDptoInformatica = Espacio("laboratorio-informatica", 10f, TipoEspacio.LABORATORIO, TipoEspacio.LABORATORIO, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.DEPARTAMENTO, Departamento.Informatica_e_Ingenieria_de_sistemas))
-    val despachoEina = Espacio("despacho-eina", 10f, TipoEspacio.DESPACHO, TipoEspacio.DESPACHO, 10, 0, true, null, null, EntidadAsignableEspacio())
+    val despachoEina = Espacio("despacho-eina", 10f, TipoEspacio.DESPACHO, TipoEspacio.DESPACHO, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
     val despachoDptoInformatica = Espacio("despacho-informatica", 10f, TipoEspacio.DESPACHO, TipoEspacio.DESPACHO, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.DEPARTAMENTO, Departamento.Informatica_e_Ingenieria_de_sistemas))
-    val salaComun = Espacio("sala-comun", 10f, TipoEspacio.SALA_COMUN, TipoEspacio.SALA_COMUN, 10, 0, true, null, null, EntidadAsignableEspacio())
+    val salaComun = Espacio("sala-comun", 10f, TipoEspacio.SALA_COMUN, TipoEspacio.SALA_COMUN, 10, 0, true, null, null, EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA))
 
     // Estudiante
     @Test
