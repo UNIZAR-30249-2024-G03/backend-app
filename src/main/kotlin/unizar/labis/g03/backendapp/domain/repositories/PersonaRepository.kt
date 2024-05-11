@@ -6,4 +6,5 @@ import java.util.Optional
 
 interface PersonaRepository : JpaRepository<Persona?, String?> {
     fun findByEmail(email: String): Optional<Persona>
+    fun findByEmailIn(emails: List<String>): List<Persona>
 }

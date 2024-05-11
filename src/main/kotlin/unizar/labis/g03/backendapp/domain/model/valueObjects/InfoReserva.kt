@@ -12,20 +12,25 @@ class InfoReserva {
     var descripcion: String = ""
     var maximaCapacidad: Int = 0
     constructor() {}
-    constructor(numMaxPersonas: Int, fechaInicio: LocalDateTime, fechaFinal: LocalDateTime, descripcion: String,maximaCapacidad: Int) {
-        this.numeroPersonas = numeroPersonas
+    constructor(fechaInicio: LocalDateTime, fechaFinal: LocalDateTime, descripcion: String,maximaCapacidad: Int,numPersonas: Int) {
+        this.numeroPersonas = numPersonas
         this.fechaInicio = fechaInicio
         this.fechaFinal = fechaFinal
         this.descripcion = descripcion
         this.maximaCapacidad = maximaCapacidad
     }
     fun getHoraInicio(): Int{
-        return fechaInicio.hour;
+        return fechaInicio.hour
     }
     fun getHoraFinal(): Int{
-        return fechaFinal.hour;
+        return fechaFinal.hour
     }
-
+    fun cambiarMaximaCapacidad(diferenciaCapacidad : Int){
+        maximaCapacidad += diferenciaCapacidad
+    }
+    fun capacidadValida(): Boolean{
+        return numeroPersonas <= maximaCapacidad
+    }
     override fun toString(): String {
         return "InfoReserva(numeroPersonas=$numeroPersonas, fechaInicio=$fechaInicio, fechaFinal=$fechaFinal, descripcion='$descripcion', maximaCapacidad=$maximaCapacidad)"
     }

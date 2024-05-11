@@ -13,11 +13,21 @@ class EntidadAsignableEspacio(
     @Enumerated(EnumType.STRING)
     private val tipoEntidad: TipoEntidadAsignableEspacio,
     @Enumerated(EnumType.STRING)
-    private val departamento : Departamento? = null,
+    private val departamento : Departamento? ,
     @OneToMany(fetch = FetchType.EAGER)
-    private val personas : List<Persona>? = null
+    private val personas : List<Persona>?
 ){
-    constructor() : this(TipoEntidadAsignableEspacio.EINA)
+    constructor(tipoEntidad: TipoEntidadAsignableEspacio) : this(tipoEntidad, null, null)
+    constructor(tipoEntidad: TipoEntidadAsignableEspacio, departamento: Departamento?) : this(tipoEntidad, departamento, null) {
+        require(tipoEntidad != TipoEntidadAsignableEspacio.DEPARTAMENTO || departamento != null) {
+            "El departamento no puede ser nulo cuando el tipo de entidad es DEPARTAMENTO"
+        }
+    }
+    constructor(tipoEntidad: TipoEntidadAsignableEspacio, personas: List<Persona>?) : this(tipoEntidad, null, personas) {
+        require(tipoEntidad == TipoEntidadAsignableEspacio.PERSONAS) {
+            "Las personas solo pueden ser proporcionadas si el tipo de entidad es PERSONAS"
+        }
+    }
 
     fun getTipo(): TipoEntidadAsignableEspacio {
         return tipoEntidad
@@ -30,6 +40,8 @@ class EntidadAsignableEspacio(
     fun getPersonas(): Optional<List<Persona>>{
         return Optional.ofNullable(personas)
     }
+
+
 
     override fun toString(): String {
         return when (tipoEntidad) {

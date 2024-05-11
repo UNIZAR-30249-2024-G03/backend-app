@@ -27,4 +27,5 @@ class Reserva(
         return "Reserva(id=$id, persona=$persona, espacios=$espacios, infoReserva=${infoReserva.toString()}, anulado=$anulado)"
     }
 
+
 }

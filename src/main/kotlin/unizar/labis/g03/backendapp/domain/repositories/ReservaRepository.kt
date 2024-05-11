@@ -19,11 +19,22 @@ interface ReservaRepository : JpaRepository<Reserva?, String?> {
     ): List<Reserva>
     fun findByPersona(persona: Persona?): List<Reserva>?
     fun findByAnulado(anulado: Boolean): List<Reserva>?
-    @Query("SELECT r FROM Reserva r WHERE :espacio MEMBER OF r.espacios")
-    fun findByEspacio(espacio: Espacio): List<Reserva>?
 
     @Modifying
     @Query("UPDATE Reserva SET anulado = true WHERE id = ?1")
     fun anularReserva(idReserva: Int?) {
     }
+
+    @Modifying
+    @Query("UPDATE Reserva SET anulado = true WHERE id IN :ids")
+    fun anularReservas(@Param("ids") idsReservas: List<Int?>)
+
+
+
+
+    @Query("SELECT r FROM Reserva r JOIN r.espacios e WHERE e.id = :id AND r.anulado = false AND  r.infoReserva.fechaFinal > :fechaActual")
+    fun encontrarReservasEspacio(
+        @Param("id") id: String,
+        @Param("fechaActual") fechaActual: LocalDateTime,
+    ): List<Reserva>
 }

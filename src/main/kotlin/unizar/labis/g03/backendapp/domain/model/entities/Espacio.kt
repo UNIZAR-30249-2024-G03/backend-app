@@ -76,6 +76,11 @@ class Espacio (
         this.reservable = reservable
     }
 
+    fun calculaDiferenciaDeCapacidad(porcentajeNuevo: Int?): Int {
+        if(porcentajeNuevo == 0 || porcentajeNuevo == porcentajeUsoMaximo || porcentajeNuevo == null  ) return 0
+        return  ((numMaxOcupantes.toDouble() / porcentajeNuevo) * 100).toInt() - getCapacidadMaxima()
+    }
+
     fun setCategoriaReserva(categoriaReserva: TipoEspacio) {
         this.categoriaReserva = categoriaReserva
     }
@@ -94,9 +99,18 @@ class Espacio (
     fun asignarDepartamento(departamento: Departamento){
         entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.DEPARTAMENTO, departamento)
     }
+    fun setEntidadAsignada(entidadAsignada: EntidadAsignableEspacio){
+        this.entidadAsignada = entidadAsignada
+    }
 
     fun asignarPersonas(personas: List<Persona>){
-        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.PERSONAS, personas = personas)
+        val personasValidas : MutableList<Persona> = mutableListOf()
+        for(persona in personas){
+            if(persona.getRoles().contains(Rol.Investigador_contratado) || persona.getRoles().contains(Rol.Docente_investigador)){
+                personasValidas.add(persona)
+            }
+        }
+        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.PERSONAS, personas = personasValidas)
     }
 
     override fun toString(): String {

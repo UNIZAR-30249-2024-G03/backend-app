@@ -1,42 +1,49 @@
 package unizar.labis.g03.backendapp.application.services
 
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import unizar.labis.g03.backendapp.domain.model.DTO.ReservaDTO
-import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
 import unizar.labis.g03.backendapp.domain.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
-import java.util.Optional
+import unizar.labis.g03.backendapp.domain.services.CalculoOcupantesMaximos
+import unizar.labis.g03.backendapp.domain.services.ComprobarValidezReservas
+import java.util.*
 
 @Service
 class ReservarEspacioService @Autowired constructor(
     private val reservaRepository: ReservaRepository,
     private val espacioRepository: EspacioRepository,
-    private val personaRepository: PersonaRepository
+    private val personaRepository: PersonaRepository,
+    private val comprobarValidezReservas: ComprobarValidezReservas,
+    private val calculoOcupantesMaximos: CalculoOcupantesMaximos
 ) {
-    //  Date fechaInicio, Date fechaFinal, int numAsistentesPrevistos, String descripcion
+    companion object {
+        private val ESPACIO_NO_DISPONIBLE = "El espacio ya esta reservado a la hora seleccionada"
+    }
+    @Transactional
     fun reservarEspacios(reservaDTO: ReservaDTO): Optional<Reserva> {
         val reserva = buildReserva(reservaDTO)
-        val infoReserva = reserva.infoReserva
-        val gerente = reserva.persona.esGerente()
         val reservasConflictivas: MutableList<Reserva> = mutableListOf()
-
-        for (espacio in reserva.espacios) {
-            if (!espacio.getReservable()  &&
-                !espacio.getHorario().estaDentro(infoReserva.getHoraInicio(), infoReserva.getHoraFinal())) {
-                //Return no  se puede hacer la reserva.
-            }
-            reservasConflictivas.addAll(reservaRepository.encontrarReservasConflictivas(
-                espacio.getId(), infoReserva.fechaInicio, infoReserva.fechaFinal)) //Espacio no esta reservado
-            if (reservasConflictivas.isEmpty() && !gerente) {
-               //Return no se puede hacer la reserva.
-            }
+        val conflictos = comprobarValidezReservas.comprobarReserva(reserva)
+        if (conflictos != "") {
+            throw Exception(conflictos)
         }
-        //Comprobamos que la reserva cumple con la politica de reservas
-        //Guardamos la reserva en la base de datos
+        for (espacio in reserva.espacios) {
+            reservasConflictivas.addAll(reservaRepository.encontrarReservasConflictivas(
+                espacio.getId(), reserva.infoReserva.fechaInicio, reserva.infoReserva.fechaFinal)) //Espacio no esta reservado
+            if (reservasConflictivas.isNotEmpty() && !reserva.persona.esGerente()) {
+               throw Exception(ESPACIO_NO_DISPONIBLE)
+            }
+
+        }
+        //Borramos las reservas conflictivas si existen.
+        if(reservasConflictivas.isNotEmpty()){
+            anularReservasConflictivas(reservasConflictivas)
+        }
         reservaRepository.save(reserva)
         return Optional.of(reserva)
     }
@@ -45,25 +52,16 @@ class ReservarEspacioService @Autowired constructor(
         val espacios = espacioRepository.findAllById(reservaDTO.getIdEspacios())
         val persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario()).get()
         val infoReserva = InfoReserva(
-            reservaDTO.getNumAsistentesPrevistos(), reservaDTO.getFechaInicio(),
-            reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(), maximosOcupantesValido(espacios)
+            reservaDTO.getFechaInicio(), reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(),
+            calculoOcupantesMaximos.maximosOcupantesValido(espacios),
+            reservaDTO.getNumAsistentesPrevistos()
         )
         return Reserva(null, persona, espacios, infoReserva)
     }
 
-    private fun borrarReservasConflictivas(reservasConflictivas: List<Reserva>) {
-        for (r in reservasConflictivas) {
-            reservaRepository.anularReserva(r.id)
-        }
-
-        //Espacio.opEspacio.maximosOcupantesValido()
+    private fun anularReservasConflictivas(reservasConflictivas: List<Reserva>) {
+        val idsReservas: List<Int?> = reservasConflictivas.map { it.id }
+        reservaRepository.anularReservas(idsReservas)
     }
 
-    private fun maximosOcupantesValido(espacios: List<Espacio?>): Int {
-        var suma = 0
-        for (espacio in espacios) {
-            suma += espacio!!.getCapacidadMaxima()
-        }
-        return suma
-    }
 }
