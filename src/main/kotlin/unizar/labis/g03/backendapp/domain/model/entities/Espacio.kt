@@ -69,7 +69,7 @@ class Espacio (
     }
     fun getCapacidadMaxima(): Int {
         val porcentajeReal = porcentajeUsoMaximo ?: PorcentajeUsoDefecto.getPorcentaje()
-        return ((numMaxOcupantes.toDouble() / porcentajeReal) * 100).toInt()
+        return (numMaxOcupantes * (porcentajeReal.toDouble() / 100)).toInt()
     }
 
     fun setReservable(reservable: Boolean) {
