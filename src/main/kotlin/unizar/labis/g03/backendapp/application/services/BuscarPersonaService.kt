@@ -8,7 +8,6 @@ import java.util.*
 
 
 @Service
-
 class BuscarPersonaService {
     @Autowired
     private lateinit var personaRepository: PersonaRepository

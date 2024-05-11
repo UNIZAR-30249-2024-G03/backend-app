@@ -11,12 +11,17 @@ import unizar.labis.g03.backendapp.infrastructure.http.types.ReservaOut
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import unizar.labis.g03.backendapp.application.services.AnularReservaService
 import unizar.labis.g03.backendapp.application.services.ConsultarReservasService
+import unizar.labis.g03.backendapp.application.services.ReservarEspacioService
+import unizar.labis.g03.backendapp.domain.model.DTO.ReservaDTO
+import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.valueObjects.*
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.HashSet
 
 @RestController
 class ReservasController(
+    private val reservarEspacioService: ReservarEspacioService,
     private val consultarReservasService: ConsultarReservasService,
     private val anularReservaService: AnularReservaService
 ){
@@ -33,22 +38,18 @@ class ReservasController(
         summary = "Permite que un usuario realice una reserva",
         description = "Permite que el usuario con identificador 'idUsuario' realice una reserva.")
     @PostMapping("/reservas")
-    fun addReserva(@Parameter(name = "idUsuario", description = "Identificador del usuario que se desea realizar la reserva", example = "795593") @RequestParam(required = true) idUsuario : Int,
+    fun addReserva(@Parameter(name = "idUsuario", description = "Identificador del usuario que se desea realizar la reserva", example = "gerente@gmail.es") @RequestParam(required = true) idUsuario : String,
                    @Parameter(name = "idsEspacios", description = "Espacio o espacios que el usuario desea reservar", example = "espacio1, espacio2, yokse") @RequestParam(required = true) idsEspacios : List<String>,
                    @Parameter(name = "tipoUsoReserva", description = "El tipo de uso de reserva que va a tener la reserva que se va a añadir al sistema", example = "Docencia") @RequestParam(required = true) tipoUsoReserva : TipoUsoReserva,
                    @Parameter(name = "numMaxOcupantes", description = "Número de ocupantes máximos que va a tener la reserva que se va a añadir al sistema", example = "8") @RequestParam(required = true) numMaxOcupantes : Int,
-                   @Parameter(name = "fechaInicio", description = "Fecha y hora de inicio a la que dará comienzo la reserva que se va a añadir al sistema", example = "2000-10-31T01:30:00.000-05:00") @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fechaInicio: Date,
-                   @Parameter(name = "fechaFinal", description = "Fecha y hora de inicio a la que dará comienzo la reserva que se va a añadir al sistema", example = "2000-10-31T01:30:00.000-05:00") @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fechaFinal: Date,
-                   @Parameter(name = "descripcion", description = "Descripción de la reserva que se va a añadir al sistema", example = "Reserva hecha por el grupo 03") @RequestParam(required = false) descripcion: String) : ReservaOut {
+                   @Parameter(name = "fechaInicio", description = "Fecha y hora de inicio a la que dará comienzo la reserva que se va a añadir al sistema", example = "2000-10-31T01:30:00.000-05:00") @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fechaInicio: LocalDateTime,
+                   @Parameter(name = "fechaFinal", description = "Fecha y hora de inicio a la que dará comienzo la reserva que se va a añadir al sistema", example = "2000-10-31T01:30:00.000-05:00") @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fechaFinal: LocalDateTime,
+                   @Parameter(name = "descripcion", description = "Descripción de la reserva que se va a añadir al sistema", example = "Reserva hecha por el grupo 03") @RequestParam(required = false) descripcion: String) : ResponseEntity<Reserva> {
+        val reserva = reservarEspacioService.reservarEspacios(ReservaDTO(idsEspacios, idUsuario, fechaInicio, fechaFinal, numMaxOcupantes, descripcion))
 
-        val reserva = ReservaOut(
-            "idReserva",
-            PersonaOut("Paco", "Paquito", "paco@gmail.com", HashSet<Rol>(), Departamento.Informatica_e_Ingenieria_de_sistemas),
-            EspacioOut("idEspacio", 10f, TipoEspacio.AULA, TipoEspacio.AULA, 5, 1, true, 100),
-            InfoReserva()
-        )
+        if (reserva.isPresent) return ResponseEntity.ok(reserva.get());
+        else return ResponseEntity.badRequest().build()
 
-        return reserva;
     }
 
     @Operation(

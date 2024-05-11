@@ -3,6 +3,9 @@ package unizar.labis.g03.backendapp.application.services
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import unizar.labis.g03.backendapp.application.exceptions.EspacioYaReservadoException
+import unizar.labis.g03.backendapp.application.exceptions.ReservaNoValidaException
+import unizar.labis.g03.backendapp.application.exceptions.UsuarioNoEncontradoException
 import unizar.labis.g03.backendapp.domain.model.DTO.ReservaDTO
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
@@ -29,13 +32,13 @@ class ReservarEspacioService @Autowired constructor(
         val reservasConflictivas: MutableList<Reserva> = mutableListOf()
         val conflictos = comprobarValidezReservas.comprobarReserva(reserva)
         if (conflictos != "") {
-            throw Exception(conflictos)
+            throw ReservaNoValidaException(conflictos)
         }
         for (espacio in reserva.espacios) {
             reservasConflictivas.addAll(reservaRepository.encontrarReservasConflictivas(
                 espacio.getId(), reserva.infoReserva.fechaInicio, reserva.infoReserva.fechaFinal)) //Espacio no esta reservado
             if (reservasConflictivas.isNotEmpty() && !reserva.persona.esGerente()) {
-               throw Exception(ESPACIO_NO_DISPONIBLE)
+               throw EspacioYaReservadoException(ESPACIO_NO_DISPONIBLE)
             }
         }
         //Borramos las reservas conflictivas si existen.
@@ -48,13 +51,14 @@ class ReservarEspacioService @Autowired constructor(
 
     private fun buildReserva(reservaDTO: ReservaDTO): Reserva {
         val espacios = espacioRepository.findAllById(reservaDTO.getIdEspacios())
-        val persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario()).get()
+        val persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario())
+        if (persona.isEmpty) throw UsuarioNoEncontradoException("No existe usuario de la reserva")
         val infoReserva = InfoReserva(
             reservaDTO.getFechaInicio(), reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(),
             CalculoOcupantesMaximos().calculo(espacios),
             reservaDTO.getNumAsistentesPrevistos()
         )
-        return Reserva(null, persona, espacios, infoReserva)
+        return Reserva(null, persona.get(), espacios, infoReserva)
     }
 
     private fun anularReservasConflictivas(reservasConflictivas: List<Reserva>) {

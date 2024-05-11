@@ -41,6 +41,7 @@ class ComprobarValidezReservas {
         return conflictos
     }
 
+    // TODO: ESTO NO FUNCIONA
     fun comprobarReservaDelEspacio(espacio: Espacio, reserva: Reserva): String {
         var conflictos = espacio.getId() + "["
         if (!espacio.getReservable()) {
