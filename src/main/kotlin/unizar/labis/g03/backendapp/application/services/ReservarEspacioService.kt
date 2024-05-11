@@ -9,7 +9,7 @@ import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
 import unizar.labis.g03.backendapp.domain.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
-import unizar.labis.g03.backendapp.domain.services.CalculoOcupantesMaximos
+import unizar.labis.g03.backendapp.domain.model.valueObjects.CalculoOcupantesMaximos
 import unizar.labis.g03.backendapp.domain.services.ComprobarValidezReservas
 import java.util.*
 
@@ -19,7 +19,6 @@ class ReservarEspacioService @Autowired constructor(
     private val espacioRepository: EspacioRepository,
     private val personaRepository: PersonaRepository,
     private val comprobarValidezReservas: ComprobarValidezReservas,
-    private val calculoOcupantesMaximos: CalculoOcupantesMaximos
 ) {
     companion object {
         private val ESPACIO_NO_DISPONIBLE = "El espacio ya esta reservado a la hora seleccionada"
@@ -53,7 +52,7 @@ class ReservarEspacioService @Autowired constructor(
         val persona = personaRepository.findByEmail(reservaDTO.getEmailUsuario()).get()
         val infoReserva = InfoReserva(
             reservaDTO.getFechaInicio(), reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(),
-            calculoOcupantesMaximos.maximosOcupantesValido(espacios),
+            CalculoOcupantesMaximos().calculo(espacios),
             reservaDTO.getNumAsistentesPrevistos()
         )
         return Reserva(null, persona, espacios, infoReserva)

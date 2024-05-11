@@ -47,8 +47,8 @@ class DataLoader : CommandLineRunner {
         )
 
         val reservas = listOf(
-            Reserva(id = null, persona = personas[0], espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20)),
-            Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva(10, LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20))
+            Reserva(id = null, persona = personas[0], espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva( LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20,10)),
+            Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva( LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20,10))
         )
         personaRepository?.saveAll(personas)
 
