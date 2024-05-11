@@ -29,4 +29,22 @@ class Horario{
         return horaInicio in horaApertura..horaCierre && horaFin in horaApertura..horaCierre
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Horario
+
+        if (horaApertura != other.horaApertura) return false
+        if (horaCierre != other.horaCierre) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = horaApertura
+        result = 31 * result + horaCierre
+        return result
+    }
+
 }
