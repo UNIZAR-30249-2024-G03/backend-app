@@ -31,12 +31,12 @@ class ComprobarValidezReservas {
     }
 
     fun comprobarReserva(reserva: Reserva): String{
-        val conflictos = ""
+        var conflictos = ""
         for(espacio in reserva.espacios){
-            conflictos.plus(comprobarReservaDelEspacio(espacio, reserva))
+            conflictos = conflictos.plus(comprobarReservaDelEspacio(espacio, reserva))
         }
         if(reserva.infoReserva.capacidadValida()){
-            conflictos.plus(CAPACIDAD_INSUFICIENTE)
+            conflictos = conflictos.plus(CAPACIDAD_INSUFICIENTE)
         }
         return conflictos
     }
