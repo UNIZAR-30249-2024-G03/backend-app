@@ -17,12 +17,12 @@ class PersonasController(
     @Operation(
         summary = "Permite obtener la informacion de un usuario",
         description = "Permite obtener la informacion de un usuari con identificador 'id'.")
-    @GetMapping("/personas/{id}")
-    fun obtenerPersona(@PathVariable @Parameter(name = "id", description = "Email de la persona", example = "gerente@gmail.com") id : String) : Persona {
-        val persona = buscarPersonaService.buscarPersona(id)
+    @GetMapping("/personas")
+    fun obtenerPersona(@RequestParam(required = false) @Parameter(name = "email", description = "Email de la persona", example = "gerente@gmail.com", required = true) email : String = "") : Persona {
+        val persona = buscarPersonaService.buscarPersona(email)
 
         if (persona.isPresent) return persona.get();
-        else throw UsuarioNoEncontradoException("No existe el usuario con email: $id")
+        else throw UsuarioNoEncontradoException("No existe el usuario con email: $email")
     }
 
     @Operation(
