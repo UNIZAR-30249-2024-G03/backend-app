@@ -3,6 +3,7 @@ package unizar.labis.g03.backendapp.application.services
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
+import unizar.labis.g03.backendapp.application.exceptions.UsuarioNoEncontradoException
 import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
 import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
@@ -19,7 +20,7 @@ class ModificarPersonaService @Autowired constructor(private val personaReposito
             personaModificada.setDepartamento(departamento)
             personaRepository.save(personaModificada)
         } else {
-            throw NotFoundException()
+            throw UsuarioNoEncontradoException("No existe usuario con el email $email")
         }
     }
 }
