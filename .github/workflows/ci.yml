@@ -1,9 +1,9 @@
 # Creación de un workflow de GitHub Actions
 
-name: Integración continua con Maven
+name: Integración continua con Gradle
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
