@@ -3,7 +3,7 @@
 name: Integración continua con Maven
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
