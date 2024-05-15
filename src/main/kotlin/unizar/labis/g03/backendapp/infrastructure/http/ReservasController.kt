@@ -19,6 +19,7 @@ import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.HashSet
 
+@CrossOrigin(origins = ["*"])
 @RestController
 class ReservasController(
     private val reservarEspacioService: ReservarEspacioService,

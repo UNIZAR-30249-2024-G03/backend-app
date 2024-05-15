@@ -10,6 +10,7 @@ import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import unizar.labis.g03.backendapp.domain.model.valueObjects.Departamento
 import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
 
+@CrossOrigin(origins = ["*"])
 @RestController
 class PersonasController(
     val buscarPersonaService: BuscarPersonaService
