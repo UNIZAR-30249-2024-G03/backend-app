@@ -56,8 +56,8 @@ class ReservasController(
     @Operation(
         summary = "Permite a un usuario con rol de gerente eliminar una reserva del sistema",
         description = "Permite eliminar del sistema la reserva con identificador 'id' si el usuario con identificador 'idUsuario' tiene el rol de gerente.")
-    @DeleteMapping("/reservas/{id}")
-    fun eliminarReserva(@Parameter(name = "idReserva", description = "Identificador de la reserva a modificar", example = "reserva-1") @RequestParam(required = true) @PathVariable idReserva : Int,
+    @DeleteMapping("/reservas")
+    fun eliminarReserva(@Parameter(name = "idReserva", description = "Identificador de la reserva a modificar", example = "reserva-1") @RequestParam(required = true) idReserva : Int,
                         @Parameter(name = "idUsuario", description = "Identificador del usuario que desea eliminar la reserva", example = "795593") @RequestParam(required = true) idUsuario : String,): ResponseEntity<String> {
         val eliminada = anularReservaService.anularReserva(idUsuario, idReserva)
         return if (eliminada) ResponseEntity.ok("Reserva \"$idReserva\" eliminada con exito")
