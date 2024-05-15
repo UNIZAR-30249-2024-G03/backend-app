@@ -18,6 +18,7 @@ import unizar.labis.g03.backendapp.application.services.BuscarEspacioService
 import unizar.labis.g03.backendapp.application.services.ModificarEspacioService
 import java.util.*
 
+@CrossOrigin(origins = ["*"])
 @RestController
 class EspaciosController(
     private val buscarEspacioService: BuscarEspacioService,

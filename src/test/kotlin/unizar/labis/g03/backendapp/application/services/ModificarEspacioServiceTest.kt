@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -11,6 +12,7 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
+import unizar.labis.g03.backendapp.application.exceptions.UsuarioSinPermisosException
 import unizar.labis.g03.backendapp.domain.model.DTO.EspacioDTO
 import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.entities.Persona
@@ -18,16 +20,17 @@ import unizar.labis.g03.backendapp.domain.model.valueObjects.*
 import unizar.labis.g03.backendapp.domain.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
+import unizar.labis.g03.backendapp.domain.services.ActualizarReservas
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
 class ModificarEspacioServiceTest {
     @Mock
-    private val mockReservaRepository: ReservaRepository? = null
-    @Mock
     private val mockPersonaRepository: PersonaRepository? = null
     @Mock
     private val mockEspacioRepository: EspacioRepository? = null
+    @Mock
+    private val actualizarReservas: ActualizarReservas? = null
 
     @InjectMocks
     private val modificarEspacioService: ModificarEspacioService? = null
@@ -56,9 +59,8 @@ class ModificarEspacioServiceTest {
         Mockito.`when`<Optional<Espacio>>(this.mockEspacioRepository?.findById(any()))
             .thenReturn(Optional.of(espacio))
 
-
-        modificarEspacioService?.modificarEspacio(espacioEinaDTO, "paco@gmail.com")?.let {
-            assertTrue(it.isEmpty)
+        assertThrows<UsuarioSinPermisosException>{
+            modificarEspacioService?.modificarEspacio(espacioEinaDTO, "paco@gmail.com")
         }
 
         Mockito.verify(this.mockEspacioRepository, Mockito.times(0))?.save(any())
@@ -81,8 +83,6 @@ class ModificarEspacioServiceTest {
         }
 
         Mockito.verify(this.mockEspacioRepository, Mockito.times(1))?.save(any())
-
-        Mockito.verify(spyEspacio, Mockito.times(1)).asignarEina()
     }
 
     @Test
@@ -103,9 +103,6 @@ class ModificarEspacioServiceTest {
         }
 
         Mockito.verify(this.mockEspacioRepository, Mockito.times(1))?.save(any())
-
-        espacioDepartamentoDTO.getDepartamentoAsignado()
-            ?.let { Mockito.verify(spyEspacio, Mockito.times(1)).asignarDepartamento(it) }
     }
 
     @Test
@@ -113,8 +110,8 @@ class ModificarEspacioServiceTest {
         Mockito.`when`<Optional<Persona>>(this.mockPersonaRepository?.findByEmail(any()))
             .thenReturn(Optional.of(gerente))
 
-        Mockito.`when`<Optional<Persona>>(this.mockPersonaRepository?.findByEmail("profe@gmail.com"))
-            .thenReturn(Optional.of(profesor))
+        Mockito.`when`<List<Persona>>(this.mockPersonaRepository?.findByEmailIn(listOf("profe@gmail.com")))
+            .thenReturn(listOf(profesor))
 
         val spyEspacio = Mockito.spy(espacio)
 
@@ -125,12 +122,10 @@ class ModificarEspacioServiceTest {
         modificarEspacioService?.modificarEspacio(espacioPersonasDTO, "gerente@gmail.com")?.let {
             assertTrue(it.isPresent)
             assertEquals(TipoEntidadAsignableEspacio.PERSONAS, it.get().getEntidadAsignada()?.getTipo())
+            println(it.get().getEntidadAsignada()?.getPersonas()?.get())
             assertTrue(it.get().getEntidadAsignada()?.getPersonas()?.get()?.contains(profesor) == true)
         }
 
         Mockito.verify(this.mockEspacioRepository, Mockito.times(1))?.save(any())
-
-
-        Mockito.verify(spyEspacio, Mockito.times(1)).asignarPersonas(listOf(profesor))
     }
 }

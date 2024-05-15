@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -11,6 +12,7 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
+import unizar.labis.g03.backendapp.application.exceptions.UsuarioNoEncontradoException
 import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
@@ -50,8 +52,8 @@ class ConsultarReservasServiceTest {
         Mockito.`when`<Optional<Persona>>(this.mockPersonaRepository?.findByEmail(any()))
             .thenReturn(Optional.empty())
 
-        consultarReservasService?.consultarReservas("noexiste@gmail.com")?.let {
-            assertNull(it)
+        assertThrows<UsuarioNoEncontradoException>{
+            consultarReservasService?.consultarReservas("noexiste@gmail.com")
         }
     }
 

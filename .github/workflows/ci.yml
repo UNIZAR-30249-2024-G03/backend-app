@@ -1,0 +1,28 @@
+# Creación de un workflow de GitHub Actions
+
+name: Integración continua con Gradle
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Build and test with Gradle
+        run: ./gradlew build -x test
+      - name: Run tests
+        run: ./gradlew test

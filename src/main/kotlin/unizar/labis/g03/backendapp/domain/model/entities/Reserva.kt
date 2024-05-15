@@ -10,7 +10,7 @@ class Reserva(
     val id: Int?,
     @ManyToOne(fetch = FetchType.EAGER)
     val persona: Persona,
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     var espacios: MutableList<Espacio> = ArrayList(),
     @Embedded
     val infoReserva: InfoReserva,
