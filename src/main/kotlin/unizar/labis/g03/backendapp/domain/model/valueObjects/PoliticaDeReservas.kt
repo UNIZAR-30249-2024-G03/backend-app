@@ -28,11 +28,12 @@ class PoliticaDeReservas {
     )
     // Función para verificar si un usuario tiene acceso a un espacio
     fun tieneAcceso(persona: Persona,espacio: Espacio): Boolean {
+        var mismoDepartamento = false
         print(persona)
         print(" quiere reservar ")
         println(espacio)
         val rolPersona = if(persona.esGerente()) Rol.Gerente else persona.getRoles().first()
-        val mismoDepartamento = persona.getDepartamento()?.equals(espacio.getEntidadAsignada()?.getDepartamento()?.get())
+        if (espacio.getEntidadAsignada()?.getTipo() == TipoEntidadAsignableEspacio.DEPARTAMENTO) mismoDepartamento = persona.getDepartamento()?.equals(espacio.getEntidadAsignada()?.getDepartamento()?.get()) == true
         val tipoEntidad = espacio.getEntidadAsignada()?.getTipo()
         return when {
             tipoEntidad ==  TipoEntidadAsignableEspacio.EINA -> politicasAccesoEINA[rolPersona]?.contains(espacio.getCategoriaReserva())

@@ -10,7 +10,7 @@ interface EspacioRepository : JpaRepository<Espacio, String?> {
     @Query(
         "SELECT e FROM Espacio e WHERE (:id is null OR e.id = :id) " +
                 "AND (:categoriaReserva is null OR e.categoriaReserva = :categoriaReserva) " +
-                "AND (:numMaxOcupantes is null OR e.numMaxOcupantes = :numMaxOcupantes) " +
+                "AND (:numMaxOcupantes is null OR e.numMaxOcupantes >= :numMaxOcupantes) " +
                 "AND (:planta is null OR e.planta = :planta)"
     )
     fun buscarEspacios(

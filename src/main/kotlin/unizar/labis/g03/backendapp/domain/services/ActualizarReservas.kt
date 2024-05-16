@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 @Service
 class ActualizarReservas {
-
+    @Autowired
     private lateinit var comprobarValidezReservas: ComprobarValidezReservas
 
     @Autowired
@@ -30,7 +30,10 @@ class ActualizarReservas {
             reservaRepository.saveAll(reservas)
         }
         val reservasInvalidas = comprobarValidezReservas.comprobarReservasdelEspacio(reservas,espacioModificado)
-        reservaRepository.anularReservas(reservasInvalidas.map { it.id })
+        for (reserva in reservasInvalidas){
+            reservaRepository.anularReserva(reserva.id)
+        }
+        //reservaRepository.anularReservas(reservasInvalidas.map { it.id })
     }
 
 

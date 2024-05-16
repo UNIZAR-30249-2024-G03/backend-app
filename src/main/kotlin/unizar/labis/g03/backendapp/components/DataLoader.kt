@@ -28,13 +28,20 @@ class DataLoader : CommandLineRunner {
     private fun cargarDatosDePrueba() {
         val gerente = Persona(email = "gerente@gmail.com", nombre = "Gerente", apellido = "Gerentioso")
         gerente.setRoles(setOf(Rol.Gerente))
+        val profesorInformatica = Persona(email = "profesor@gmail.com", nombre = "Profesor", apellido = "Informatica")
+        profesorInformatica.setRoles(setOf(Rol.Docente_investigador))
+        val tecnicoLaboratorio = Persona(email = "tecnico@gmail.com", nombre = "Tecnico", apellido = "Laboratorio")
+        tecnicoLaboratorio.setRoles(setOf(Rol.tecnico_laboratorio))
+        tecnicoLaboratorio.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
         val personas = listOf(
-            Persona(email = "persona1@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre1", apellido = "Apellido1"),
+            Persona(email = "estudiante@gmail.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Estudiante", apellido = "Estudiantil"),
             Persona(email = "persona2@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre2", apellido = "Apellido2"),
             Persona(email = "persona3@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre3", apellido = "Apellido3"),
             Persona(email = "persona4@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre4", apellido = "Apellido4"),
             Persona(email = "persona5@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre5", apellido = "Apellido5"),
-            gerente
+            gerente,
+            profesorInformatica,
+            tecnicoLaboratorio
         )
 
         val espacios = listOf(

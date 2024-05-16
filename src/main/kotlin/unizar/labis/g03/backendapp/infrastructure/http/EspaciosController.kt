@@ -40,7 +40,7 @@ class EspaciosController(
     @Operation(
         summary = "Permite a un usuario con rol de gerente modificar los siguientes atributos de un espacio: reservable, categoría de reserva de espacio" +
                 "horario de reserva disponible, porcentaje de uso máximo permitido.",
-        description = "Permite modificar los atributos de un espacio si el usuario con identificador 'idUsuario' tiene rol de gerente")
+        description = "Permite modificar los atributos de un espacio si  el usuario con identificador 'idUsuario' tiene rol de gerente")
     @PostMapping("/espacios")
     fun updateEspacio(@Parameter(name = "idEspacio", description = "Identificador del espacio a modificar", example = "des-1") @RequestParam(required = true) idEspacio : String,
                       @Parameter(name = "idUsuario", description = "Identificador del usuario que desea modificar los datos del espacio", example = "795593") @RequestParam(required = true) idUsuario : String,

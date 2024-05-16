@@ -27,6 +27,7 @@ class ComprobarValidezReservas {
                 reservasInvalidas.add(reserva)
             }
         }
+        println(reservasInvalidas)
         return reservasInvalidas
     }
 
@@ -35,7 +36,7 @@ class ComprobarValidezReservas {
         for(espacio in reserva.espacios){
             conflictos = conflictos.plus(comprobarReservaDelEspacio(espacio, reserva))
         }
-        if(reserva.infoReserva.capacidadValida()){
+        if(!reserva.infoReserva.capacidadValida()){
             conflictos = conflictos.plus(CAPACIDAD_INSUFICIENTE)
         }
         return conflictos
