@@ -6,7 +6,6 @@ import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.PoliticaDeReservas
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
-import java.time.LocalDateTime
 
 @Service
 class ComprobarValidezReservas {
@@ -16,34 +15,28 @@ class ComprobarValidezReservas {
         private val NO_TIENE_ACCESO = "No tiene acceso a reservar este espacio"
         private val CAPACIDAD_INSUFICIENTE = "Los espacios no tiene capacidad suficiente para albergar a todos los ocupantes"
     }
-
-    @Autowired
-    private lateinit var reservaRepository: ReservaRepository
     fun comprobarReservasdelEspacio(reservas : List<Reserva>,espacio: Espacio) :  MutableList<Reserva> {
         val reservasInvalidas : MutableList<Reserva> = mutableListOf()
 
         for(reserva in reservas){
-            if(!reserva.infoReserva.capacidadValida() || comprobarReservaDelEspacio(espacio, reserva).equals("")){
+            if(!reserva.infoReserva.capacidadValida() || obtenerConflictos(espacio, reserva).equals("")){
                 reservasInvalidas.add(reserva)
             }
         }
-        println(reservasInvalidas)
         return reservasInvalidas
     }
 
-    fun comprobarReserva(reserva: Reserva): String{
+    fun comprobar(reserva: Reserva): String{
         var conflictos = ""
         for(espacio in reserva.espacios){
-            conflictos = conflictos.plus(comprobarReservaDelEspacio(espacio, reserva))
+            conflictos = conflictos.plus(obtenerConflictos(espacio, reserva))
         }
         if(!reserva.infoReserva.capacidadValida()){
             conflictos = conflictos.plus(CAPACIDAD_INSUFICIENTE)
         }
         return conflictos
     }
-
-    // TODO: ESTO NO FUNCIONA
-    fun comprobarReservaDelEspacio(espacio: Espacio, reserva: Reserva): String {
+    private fun obtenerConflictos(espacio: Espacio, reserva: Reserva): String {
         var conflictos = espacio.getId() + "["
         if (!espacio.getReservable()) {
             conflictos += ESPACIO_NO_RESERVABLE + "\n"

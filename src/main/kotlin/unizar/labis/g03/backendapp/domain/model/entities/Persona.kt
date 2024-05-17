@@ -14,13 +14,20 @@ class Persona (
     @Enumerated(EnumType.STRING)
     private var roles: MutableSet<Rol> = mutableSetOf(), // =
     @Enumerated(EnumType.STRING)
-    private var departamentoAdscrito: Departamento? = null ) {
+    private var departamentoAdscrito: Departamento? = null,
+    @ElementCollection // Necesario para mapear una lista de Strings en JPA
+    @Column(nullable = true)
+    private var notificaciones: MutableList<String> = mutableListOf()){
 
     fun getRoles(): Set<Rol>{
         return roles
     }
-    fun getnombre(): String{
-        return nombre
+
+    fun borrarNotificaciones(){
+        notificaciones.clear()
+    }
+    fun getEmail(): String{
+        return email
     }
 
     fun setRoles(nuevosRoles : Set<Rol>){

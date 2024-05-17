@@ -11,9 +11,10 @@ import java.time.LocalDateTime
 class ActualizarReservas {
     @Autowired
     private lateinit var comprobarValidezReservas: ComprobarValidezReservas
-
     @Autowired
     private lateinit var reservaRepository: ReservaRepository
+    @Autowired
+    private lateinit var notificarPersonas: NotificarPersonas
     @Transactional
     fun actualizarReservas(espacioOriginal: Espacio,espacioModificado: Espacio){
         val reservas = reservaRepository.encontrarReservasEspacio(espacioOriginal.getId(), LocalDateTime.now())
@@ -32,6 +33,8 @@ class ActualizarReservas {
         val reservasInvalidas = comprobarValidezReservas.comprobarReservasdelEspacio(reservas,espacioModificado)
         for (reserva in reservasInvalidas){
             reservaRepository.anularReserva(reserva.id)
+            notificarPersonas.notificaAnulacion(reserva)
+
         }
         //reservaRepository.anularReservas(reservasInvalidas.map { it.id })
     }

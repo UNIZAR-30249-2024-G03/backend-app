@@ -30,7 +30,7 @@ class ReservarEspacioService @Autowired constructor(
     fun reservarEspacios(reservaDTO: ReservaDTO): Optional<Reserva> {
         val reserva = buildReserva(reservaDTO)
         val reservasConflictivas: MutableList<Reserva> = mutableListOf()
-        val conflictos = comprobarValidezReservas.comprobarReserva(reserva)
+        val conflictos = comprobarValidezReservas.comprobar(reserva)
         if (conflictos != "") {
             throw ReservaNoValidaException(conflictos)
         }
