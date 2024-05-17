@@ -33,6 +33,9 @@ class DataLoader : CommandLineRunner {
         val tecnicoLaboratorio = Persona(email = "tecnico@gmail.com", nombre = "Tecnico", apellido = "Laboratorio")
         tecnicoLaboratorio.setRoles(setOf(Rol.tecnico_laboratorio))
         tecnicoLaboratorio.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
+        val investigador = Persona(email = "investigador@gmail.com", nombre = "Investigador", apellido = "Contratado")
+        investigador.setRoles(setOf(Rol.Investigador_contratado))
+        investigador.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
         val personas = listOf(
             Persona(email = "estudiante@gmail.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Estudiante", apellido = "Estudiantil"),
             Persona(email = "persona2@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre2", apellido = "Apellido2"),
@@ -41,7 +44,8 @@ class DataLoader : CommandLineRunner {
             Persona(email = "persona5@example.com", roles = mutableSetOf(Rol.Estudiante), nombre = "Nombre5", apellido = "Apellido5"),
             gerente,
             profesorInformatica,
-            tecnicoLaboratorio
+            tecnicoLaboratorio,
+            investigador
         )
 
         val espacios = listOf(
