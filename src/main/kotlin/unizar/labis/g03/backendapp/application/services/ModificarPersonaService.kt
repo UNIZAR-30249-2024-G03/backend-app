@@ -12,7 +12,7 @@ import java.util.*
 
 @Service
 class ModificarPersonaService @Autowired constructor(private val personaRepository: PersonaRepository) {
-    fun modificarPersona(email: String, roles: Set<Rol>, departamento: Departamento) {
+    fun modificarPersona(email: String, roles: Set<Rol>, departamento: Departamento?) {
         val persona: Optional<Persona> = personaRepository.findByEmail(email)
         if (persona.isPresent) {
             val personaModificada = persona.get()

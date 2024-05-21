@@ -31,6 +31,7 @@ class Persona (
     }
 
     fun setRoles(nuevosRoles : Set<Rol>){
+        // TODO: pensar si deberiamos controlar que roles se pueden poner porque ahora puedes poner la combinacion que te de la gana
         roles.clear()
         roles.addAll(nuevosRoles)
     }
@@ -39,7 +40,7 @@ class Persona (
         return departamentoAdscrito
     }
 
-    fun setDepartamento(nuevoDepartamento: Departamento){
+    fun setDepartamento(nuevoDepartamento: Departamento?){
         departamentoAdscrito = nuevoDepartamento
     }
     fun esGerente(): Boolean{
