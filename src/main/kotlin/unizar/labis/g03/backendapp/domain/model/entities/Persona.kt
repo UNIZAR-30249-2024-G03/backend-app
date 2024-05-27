@@ -15,8 +15,7 @@ class Persona (
     private var roles: MutableSet<Rol> = mutableSetOf(), // =
     @Enumerated(EnumType.STRING)
     private var departamentoAdscrito: Departamento? = null,
-    @ElementCollection // Necesario para mapear una lista de Strings en JPA
-    @Column(nullable = true)
+    @ElementCollection(fetch = FetchType.EAGER)
     private var notificaciones: MutableList<String> = mutableListOf()){
 
     fun getRoles(): Set<Rol>{
@@ -48,7 +47,13 @@ class Persona (
     }
 
     override fun toString(): String {
-        return "Persona(nombre='$nombre', apellido='$apellido', email='$email', roles=$roles, departamentoAdscrito=$departamentoAdscrito)"
+        return "Persona(nombre='$nombre', apellido='$apellido', email='$email', roles=$roles, departamentoAdscrito=$departamentoAdscrito , notificaciones=$notificaciones)"
+    }
+    fun addNotificacion(notificacion: String){
+        notificaciones.add(notificacion)
+    }
+    fun deleteAllNotificacion(notificacion: String) {
+        notificaciones.clear()
     }
 
 

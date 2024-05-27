@@ -15,7 +15,8 @@ class NotificarPersonas {
     }
 
     fun notificaAnulacion(reserva: Reserva) {
-        personaRepository.addNotificacion(reserva.persona.getEmail(), obtenerMensajeAnulacion(reserva))
+        reserva.persona.addNotificacion(obtenerMensajeAnulacion(reserva))
+        personaRepository.save(reserva.persona)
     }
 
     private fun obtenerMensajeAnulacion(reserva: Reserva): String {

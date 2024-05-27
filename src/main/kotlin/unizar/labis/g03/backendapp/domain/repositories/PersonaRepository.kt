@@ -10,8 +10,4 @@ import java.util.Optional
 interface PersonaRepository : JpaRepository<Persona?, String?> {
     fun findByEmail(email: String): Optional<Persona>
     fun findByEmailIn(emails: List<String>): List<Persona>
-    @Query("UPDATE Persona p SET p.notificaciones = p.notificaciones || :notificacion WHERE p.email = :email")
-    fun addNotificacion(email: String, notificacion: String)
-
-
 }
