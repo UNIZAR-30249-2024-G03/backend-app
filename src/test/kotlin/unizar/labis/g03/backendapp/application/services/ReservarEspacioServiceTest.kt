@@ -80,7 +80,7 @@ class ReservarEspacioServiceTest(){
 
         val fechaComienzo = LocalDateTime.of(2024, 12, 1, 10, 0)
         val fechaFin = LocalDateTime.of(2024, 12, 1, 12, 0)
-        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion")
+        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion", TipoUsoReserva.Docencia)
         assertNotNull(reservarEspacioService)
         org.junit.jupiter.api.assertThrows<ReservaNoValidaException> {reservarEspacioService?.reservarEspacios(reservaDTO)}
     }
@@ -95,7 +95,7 @@ class ReservarEspacioServiceTest(){
 
         val fechaComienzo = LocalDateTime.of(2024, 12, 1, 0, 0)
         val fechaFin = LocalDateTime.of(2024, 12, 1, 2, 0)
-        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion")
+        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion", TipoUsoReserva.Docencia)
         assertNotNull(reservarEspacioService)
         org.junit.jupiter.api.assertThrows<ReservaNoValidaException> {reservarEspacioService?.reservarEspacios(reservaDTO)}
     }
@@ -110,7 +110,7 @@ class ReservarEspacioServiceTest(){
 
         val fechaComienzo = LocalDateTime.of(2024, 12, 1, 0, 0)
         val fechaFin = LocalDateTime.of(2024, 12, 1, 2, 0)
-        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion")
+        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion", TipoUsoReserva.Docencia)
         assertNotNull(reservarEspacioService)
         org.junit.jupiter.api.assertThrows<ReservaNoValidaException> {reservarEspacioService?.reservarEspacios(reservaDTO)}
     }
@@ -125,7 +125,7 @@ class ReservarEspacioServiceTest(){
 
         val fechaComienzo = LocalDateTime.of(2024, 12, 1, 10, 0)
         val fechaFin = LocalDateTime.of(2024, 12, 1, 12, 0)
-        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion")
+        val reservaDTO = ReservaDTO(listOf("id"), "email@gmail.com", fechaComienzo, fechaFin, 2, "Descripcion", TipoUsoReserva.Docencia)
         assertNotNull(reservarEspacioService)
         val reserva = reservarEspacioService?.reservarEspacios(reservaDTO)
         assertTrue(reserva?.isPresent == true)

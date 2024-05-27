@@ -14,6 +14,7 @@ import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoUsoReserva
 import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
 import unizar.labis.g03.backendapp.domain.services.NotificarPersonas
@@ -38,7 +39,7 @@ class AnularReservaServiceTests {
     val propietarioReserva = Persona("Paco", "Martinez", "paco@gmail.com", mutableSetOf(Rol.Estudiante))
     val personaAleatoria = Persona("Paco", "Martinez", "random@gmail.com", mutableSetOf(Rol.Estudiante))
     val gerente = Persona("Gerente", "Gerencioso", "gerente@gmail.com", mutableSetOf(Rol.Gerente))
-    val reserva = Reserva(id = 1, persona = propietarioReserva, infoReserva = InfoReserva( fechahComienzo, fechaFinal, "descripcion", 10,20))
+    val reserva = Reserva(id = 1, persona = propietarioReserva, infoReserva = InfoReserva( fechahComienzo, fechaFinal, "descripcion", 10,20, TipoUsoReserva.Docencia))
 
     companion object {
         @BeforeAll

@@ -46,7 +46,7 @@ class ReservasController(
                    @Parameter(name = "fechaInicio", description = "Fecha y hora de inicio a la que dará comienzo la reserva que se va a añadir al sistema", example = "2000-10-31T01:30:00.000-05:00") @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fechaInicio: LocalDateTime,
                    @Parameter(name = "fechaFinal", description = "Fecha y hora de inicio a la que dará comienzo la reserva que se va a añadir al sistema", example = "2000-10-31T01:30:00.000-05:00") @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fechaFinal: LocalDateTime,
                    @Parameter(name = "descripcion", description = "Descripción de la reserva que se va a añadir al sistema", example = "Reserva hecha por el grupo 03") @RequestParam(required = false) descripcion: String) : ResponseEntity<Reserva> {
-        val reserva = reservarEspacioService.reservarEspacios(ReservaDTO(idsEspacios, idUsuario, fechaInicio, fechaFinal, numMaxOcupantes, descripcion))
+        val reserva = reservarEspacioService.reservarEspacios(ReservaDTO(idsEspacios, idUsuario, fechaInicio, fechaFinal, numMaxOcupantes, descripcion, tipoUsoReserva))
 
         if (reserva.isPresent) return ResponseEntity.ok(reserva.get());
         else return ResponseEntity.badRequest().build()
