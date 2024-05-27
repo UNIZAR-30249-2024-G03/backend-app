@@ -14,6 +14,7 @@ import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
 import unizar.labis.g03.backendapp.domain.model.valueObjects.CalculoOcupantesMaximos
 import unizar.labis.g03.backendapp.domain.services.ComprobarValidezReservas
+import unizar.labis.g03.backendapp.domain.services.NotificarPersonas
 import java.util.*
 
 @Service
@@ -22,6 +23,8 @@ class ReservarEspacioService @Autowired constructor(
     private val espacioRepository: EspacioRepository,
     private val personaRepository: PersonaRepository,
     private val comprobarValidezReservas: ComprobarValidezReservas,
+    private val notificarPersonas: NotificarPersonas
+
 ) {
     companion object {
         private val ESPACIO_NO_DISPONIBLE = "El espacio ya esta reservado a la hora seleccionada"
@@ -43,6 +46,7 @@ class ReservarEspacioService @Autowired constructor(
         }
         //Borramos las reservas conflictivas si existen.
         if(reservasConflictivas.isNotEmpty()){
+            print("Reservas conflictivas: " + reservasConflictivas.get(0).toString())
             anularReservasConflictivas(reservasConflictivas)
         }
         reservaRepository.save(reserva)
@@ -63,6 +67,7 @@ class ReservarEspacioService @Autowired constructor(
 
     private fun anularReservasConflictivas(reservasConflictivas: List<Reserva>) {
         val idsReservas: List<Int?> = reservasConflictivas.map { it.id }
+        reservasConflictivas.forEach { notificarPersonas.notificaAnulacion(it) }
         reservaRepository.anularReservas(idsReservas)
     }
 

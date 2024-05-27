@@ -4,14 +4,14 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
-import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
 import java.time.LocalDateTime
 
 
 interface ReservaRepository : JpaRepository<Reserva, String> {
-    @Query("SELECT r FROM Reserva r JOIN r.espacios e WHERE e.id = :id AND r.infoReserva.fechaInicio <= :horaFinal AND r.infoReserva.fechaFinal >= :horaInicio AND r.anulado = false")
+    @Query("SELECT r FROM Reserva r JOIN r.espacios e WHERE e.id = :id AND (r.infoReserva.fechaInicio <= " +
+            ":horaFinal OR r.infoReserva.fechaFinal >= :horaInicio) AND r.anulado = false")
     fun encontrarReservasConflictivas(
         @Param("id") id: String,
         @Param("horaInicio") horaInicio: LocalDateTime,
