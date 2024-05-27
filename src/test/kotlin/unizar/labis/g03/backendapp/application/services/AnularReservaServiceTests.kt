@@ -16,6 +16,7 @@ import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
 import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
 import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
+import unizar.labis.g03.backendapp.domain.services.NotificarPersonas
 import java.time.LocalDateTime
 import java.util.*
 
@@ -26,6 +27,8 @@ class AnularReservaServiceTests {
     private val mockReservaRepository: ReservaRepository? = null
     @Mock
     private val mockPersonaRepository: PersonaRepository? = null
+    @Mock
+    private val notificarPersonas: NotificarPersonas? = null
 
     @InjectMocks
     private val anularReservaService: AnularReservaService? = null
