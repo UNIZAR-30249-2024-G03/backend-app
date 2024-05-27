@@ -21,6 +21,7 @@ import unizar.labis.g03.backendapp.domain.repositories.EspacioRepository
 import unizar.labis.g03.backendapp.domain.repositories.PersonaRepository
 import unizar.labis.g03.backendapp.domain.repositories.ReservaRepository
 import unizar.labis.g03.backendapp.domain.services.ComprobarValidezReservas
+import unizar.labis.g03.backendapp.domain.services.NotificarPersonas
 import java.time.LocalDateTime
 import java.util.*
 
@@ -32,13 +33,15 @@ class ReservarEspacioServiceTest(){
     private val mockEspacioRepository: EspacioRepository? = null
     @Mock
     private val mockReservaRepository: ReservaRepository? = null
+    @Mock
+    private val mockNotificarPersonas: NotificarPersonas? = null
 
 
     private var reservarEspacioService: ReservarEspacioService? = null
 
     @BeforeEach
     fun setMock(){
-        reservarEspacioService = ReservarEspacioService(mockReservaRepository!!, mockEspacioRepository!!, mockPersonaRepository!!, ComprobarValidezReservas())
+        reservarEspacioService = ReservarEspacioService(mockReservaRepository!!, mockEspacioRepository!!, mockPersonaRepository!!, ComprobarValidezReservas(), mockNotificarPersonas!!)
     }
 
     val aula = Espacio("aula", 10f, TipoEspacio.AULA, TipoEspacio.AULA, 10, 0, true, null, null, null)
