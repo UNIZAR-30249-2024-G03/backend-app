@@ -1,7 +1,7 @@
 package unizar.labis.g03.backendapp.domain.model.DTO
 
 import lombok.Getter
-import unizar.labis.g03.backendapp.domain.model.valueObjects.InfoReserva
+import unizar.labis.g03.backendapp.domain.model.valueObjects.TipoUsoReserva
 import java.time.LocalDateTime
 
 class ReservaDTO // Constructor
@@ -11,7 +11,8 @@ class ReservaDTO // Constructor
     private val fechaInicio: LocalDateTime,
     private val fechaFinal: LocalDateTime,
     private val numAsistentesPrevistos: Int,
-    private val descripcion: String
+    private val descripcion: String,
+    private val tipoUso: TipoUsoReserva
 ) {
     fun getIdEspacios(): List<String> {
         return idEspacios
@@ -31,5 +32,8 @@ class ReservaDTO // Constructor
 
     fun getDescripcion(): String {
         return descripcion
+    }
+    fun getTipoUso(): TipoUsoReserva {
+        return tipoUso
     }
 }

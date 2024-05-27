@@ -3,6 +3,8 @@ package unizar.labis.g03.backendapp.components
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
+import unizar.labis.g03.backendapp.application.services.ReservarEspacioService
+import unizar.labis.g03.backendapp.domain.model.DTO.ReservaDTO
 import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.entities.Persona
 import unizar.labis.g03.backendapp.domain.model.entities.Reserva
@@ -20,6 +22,8 @@ class DataLoader : CommandLineRunner {
     private val espacioRepository: EspacioRepository? = null
     @Autowired
     private val reservaRepository: ReservaRepository? = null
+    @Autowired
+    private val reservarEspacioService: ReservarEspacioService? = null
     @Throws(Exception::class)
     override fun run(vararg args: String) {
         cargarDatosDePrueba()
@@ -58,20 +62,18 @@ class DataLoader : CommandLineRunner {
         )
 
         val reservas = listOf(
-            Reserva(id = null, persona = personas[0], espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva( LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20,10)),
-            Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva( LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20,10))
+            Reserva(id = null, persona =gerente, espacios = mutableListOf(espacios[0]), infoReserva = InfoReserva( LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es una reserva", 20,10,TipoUsoReserva.Gestion)),
+            Reserva(null, personas[1], mutableListOf(espacios[1]), InfoReserva( LocalDateTime.now(), LocalDateTime.now().plusHours(2), "esto es OTRA reserva", 20,10,TipoUsoReserva.Gestion))
         )
-        personaRepository?.saveAll(personas)
-
+        //personaRepository?.saveAll(personas)
         //  espacioRepository?.saveAll(espacios)
-
         //reservaRepository?.saveAll(reservas)
-
-        val personasGuardadas = personaRepository?.findAll()
+        //reservarEspacioService?.reservarEspacios(resevaDTO1)
+        val personasGuardadas = personaRepository?.findByEmail("gerente@gmail.com")
         println("Personas guardadas: $personasGuardadas")
 
         val espaciosGuardados = espacioRepository?.findAll()
-        println("Espacios guardadas: $espaciosGuardados")
+       // println("Espacios guardadas: $espaciosGuardados")
 
         val reservasGuardadas = reservaRepository?.findAll()
         println("Reservas guardadas: $reservasGuardadas")

@@ -14,7 +14,7 @@ class NotificarPersonas {
         private val ANULACION_RESERVA_INVALIDA = "La reserva del dia %s ya no es válida"
     }
 
-    fun notificaAnulacion(reserva: Reserva) {
+        fun notificaAnulacion(reserva: Reserva) {
         reserva.persona.addNotificacion(obtenerMensajeAnulacion(reserva))
         personaRepository.save(reserva.persona)
     }

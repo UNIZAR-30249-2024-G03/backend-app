@@ -60,7 +60,7 @@ class ReservarEspacioService @Autowired constructor(
         val infoReserva = InfoReserva(
             reservaDTO.getFechaInicio(), reservaDTO.getFechaFinal(), reservaDTO.getDescripcion(),
             CalculoOcupantesMaximos().calculo(espacios),
-            reservaDTO.getNumAsistentesPrevistos()
+            reservaDTO.getNumAsistentesPrevistos(), reservaDTO.getTipoUso()
         )
         return Reserva(null, persona.get(), espacios, infoReserva)
     }
