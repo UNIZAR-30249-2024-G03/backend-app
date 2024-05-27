@@ -92,25 +92,8 @@ class Espacio (
         return entidadAsignada
     }
 
-    fun asignarEina(){
-        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.EINA)
-    }
-
-    fun asignarDepartamento(departamento: Departamento){
-        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.DEPARTAMENTO, departamento)
-    }
     fun setEntidadAsignada(entidadAsignada: EntidadAsignableEspacio){
         this.entidadAsignada = entidadAsignada
-    }
-
-    fun asignarPersonas(personas: List<Persona>){
-        val personasValidas : MutableList<Persona> = mutableListOf()
-        for(persona in personas){
-            if(persona.getRoles().contains(Rol.Investigador_contratado) || persona.getRoles().contains(Rol.Docente_investigador)){
-                personasValidas.add(persona)
-            }
-        }
-        entidadAsignada = EntidadAsignableEspacio(TipoEntidadAsignableEspacio.PERSONAS, personas = personasValidas)
     }
 
     override fun toString(): String {

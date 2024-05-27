@@ -2,6 +2,7 @@ package unizar.labis.g03.backendapp.domain.entities
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Disabled
 import unizar.labis.g03.backendapp.domain.model.entities.Espacio
 import unizar.labis.g03.backendapp.domain.model.valueObjects.*
 

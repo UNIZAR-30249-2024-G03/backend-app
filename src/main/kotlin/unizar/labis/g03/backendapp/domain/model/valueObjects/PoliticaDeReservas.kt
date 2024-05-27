@@ -22,8 +22,8 @@ class PoliticaDeReservas {
     val politicaAccesoMismoDPTO = mapOf(
         Rol.Estudiante to setOf(TipoEspacio.SALA_COMUN),
         Rol.Investigador_contratado to setOf(TipoEspacio.AULA,TipoEspacio.SEMINARIO,TipoEspacio.SALA_COMUN,TipoEspacio.DESPACHO, TipoEspacio.LABORATORIO),
-        Rol.Docente_investigador to setOf(TipoEspacio.AULA,TipoEspacio.SEMINARIO,TipoEspacio.SALA_COMUN,TipoEspacio.DESPACHO),
-        Rol.tecnico_laboratorio to setOf(TipoEspacio.SEMINARIO,TipoEspacio.SALA_COMUN),
+        Rol.Docente_investigador to setOf(TipoEspacio.AULA,TipoEspacio.SEMINARIO,TipoEspacio.SALA_COMUN,TipoEspacio.DESPACHO, TipoEspacio.LABORATORIO),
+        Rol.tecnico_laboratorio to setOf(TipoEspacio.SEMINARIO,TipoEspacio.SALA_COMUN, TipoEspacio.LABORATORIO),
         Rol.Gerente to setOf(TipoEspacio.AULA,TipoEspacio.SEMINARIO,TipoEspacio.LABORATORIO,TipoEspacio.SALA_COMUN)
     )
     // Función para verificar si un usuario tiene acceso a un espacio

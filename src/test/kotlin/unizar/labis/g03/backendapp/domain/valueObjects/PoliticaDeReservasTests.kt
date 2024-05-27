@@ -118,4 +118,167 @@ class PoliticaDeReservasTests {
     fun testPoliticaReservaSalaComunXInvestigador (){
         assertTrue(PoliticaDeReservas().tieneAcceso(investigadorContratado, salaComun))
     }
+
+    // Docente
+    @Test
+    fun testPoliticaReservaAulaXDocente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, aula))
+    }
+
+    @Test
+    fun testPoliticaReservaSeminarioEinaXDocente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, seminarioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaSeminarioDptoXDocente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, seminarioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboatorioEinaXDocente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, laboratorioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboratorioMismoDptoXDocente (){
+        docenteInvestigador.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
+        assertEquals(docenteInvestigador.getDepartamento(), Departamento.Informatica_e_Ingenieria_de_sistemas)
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, laboratorioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboratorioOtroDptoXDocente (){
+        docenteInvestigador.setDepartamento(Departamento.Ingenieria_electronica_y_comunicaciones)
+        assertFalse(PoliticaDeReservas().tieneAcceso(docenteInvestigador, laboratorioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoEinaXDocente (){
+        assertFalse(PoliticaDeReservas().tieneAcceso(docenteInvestigador, despachoEina))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoMismoDptoXDocente (){
+        docenteInvestigador.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, despachoDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoOtroDptoXDocente (){
+        docenteInvestigador.setDepartamento(Departamento.Ingenieria_electronica_y_comunicaciones)
+        assertFalse(PoliticaDeReservas().tieneAcceso(docenteInvestigador, despachoDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaSalaComunXDocente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(docenteInvestigador, salaComun))
+    }
+
+    // Tecnico de laboratorio
+    @Test
+    fun testPoliticaReservaAulaXTecnico (){
+        assertFalse(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, aula))
+    }
+
+    @Test
+    fun testPoliticaReservaSeminarioEinaXTecnico (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, seminarioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaSeminarioDptoXTecnico (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, seminarioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboatorioEinaXTecnico (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, laboratorioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboratorioMismoDptoXTecnico (){
+        tecnicoLaboratorio.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
+        assertEquals(tecnicoLaboratorio.getDepartamento(), Departamento.Informatica_e_Ingenieria_de_sistemas)
+        assertTrue(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, laboratorioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboratorioOtroDptoXTecnico (){
+        tecnicoLaboratorio.setDepartamento(Departamento.Ingenieria_electronica_y_comunicaciones)
+        assertFalse(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, laboratorioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoEinaXTecnico (){
+        assertFalse(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, despachoEina))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoMismoDptoXTecnico (){
+        tecnicoLaboratorio.setDepartamento(Departamento.Informatica_e_Ingenieria_de_sistemas)
+        assertFalse(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, despachoDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoOtroDptoXTecnico (){
+        tecnicoLaboratorio.setDepartamento(Departamento.Ingenieria_electronica_y_comunicaciones)
+        assertFalse(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, despachoDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaSalaComunXTecnico (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, salaComun))
+    }
+
+    // Gerente
+    @Test
+    fun testPoliticaReservaAulaXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, aula))
+    }
+
+    @Test
+    fun testPoliticaReservaSeminarioEinaXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, seminarioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaSeminarioDptoXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, seminarioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboatorioEinaXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, laboratorioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboratorioMismoDptoXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, laboratorioEina))
+    }
+
+    @Test
+    fun testPoliticaReservaLaboratorioOtroDptoXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, laboratorioDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoEinaXGerente (){
+        assertFalse(PoliticaDeReservas().tieneAcceso(tecnicoLaboratorio, despachoEina))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoMismoDptoXGerente (){
+        assertFalse(PoliticaDeReservas().tieneAcceso(gerente, despachoDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaDespachoOtroDptoXGerente (){
+        assertFalse(PoliticaDeReservas().tieneAcceso(gerente, despachoDptoInformatica))
+    }
+
+    @Test
+    fun testPoliticaReservaSalaComunXGerente (){
+        assertTrue(PoliticaDeReservas().tieneAcceso(gerente, salaComun))
+    }
 }

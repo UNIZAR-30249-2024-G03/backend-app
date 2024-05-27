@@ -25,6 +25,11 @@ class Persona (
     fun borrarNotificaciones(){
         notificaciones.clear()
     }
+
+    fun getnombre(): String{
+        return nombre
+    }
+
     fun getEmail(): String{
         return email
     }
@@ -52,9 +57,8 @@ class Persona (
     fun addNotificacion(notificacion: String){
         notificaciones.add(notificacion)
     }
-    fun deleteAllNotificacion(notificacion: String) {
-        notificaciones.clear()
+
+    fun getNotificaciones(): List<String>{
+        return notificaciones
     }
-
-
 }

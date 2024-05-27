@@ -2,8 +2,10 @@ package unizar.labis.g03.backendapp.infrastructure.http
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import unizar.labis.g03.backendapp.application.exceptions.UsuarioNoEncontradoException
+import unizar.labis.g03.backendapp.application.services.BorrarNotificacionesService
 import unizar.labis.g03.backendapp.application.services.BuscarPersonaService
 import unizar.labis.g03.backendapp.application.services.ModificarPersonaService
 import unizar.labis.g03.backendapp.infrastructure.http.types.PersonaOut
@@ -16,6 +18,7 @@ import unizar.labis.g03.backendapp.domain.model.valueObjects.Rol
 class PersonasController(
     val buscarPersonaService: BuscarPersonaService,
     val modificarPersonaService: ModificarPersonaService,
+    val borrarNotificacionesService: BorrarNotificacionesService
 ){
     @Operation(
         summary = "Permite obtener la informacion de un usuario",
@@ -26,6 +29,14 @@ class PersonasController(
 
         if (persona.isPresent) return persona.get();
         else throw UsuarioNoEncontradoException("No existe el usuario con email: $email")
+    }
+
+    @Operation(
+        summary = "Permite eliminar las notificaciones de un usuario",
+        description = "Permite eliminar las notificaciones de un usuario con identificador 'id'.")
+    @PutMapping("/eliminarNotificaciones")
+    fun borrarNotificaciones(@RequestParam(required = false) @Parameter(name = "email", description = "Email de la persona", example = "gerente@gmail.com", required = true) email : String = "") {
+        borrarNotificacionesService.borrarNotificaciones(email)
     }
 
     @Operation(
