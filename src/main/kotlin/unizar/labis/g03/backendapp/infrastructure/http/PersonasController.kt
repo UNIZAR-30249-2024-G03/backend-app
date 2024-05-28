@@ -34,7 +34,7 @@ class PersonasController(
     @Operation(
         summary = "Permite eliminar las notificaciones de un usuario",
         description = "Permite eliminar las notificaciones de un usuario con identificador 'id'.")
-    @PutMapping("/eliminarNotificaciones")
+    @PostMapping("/eliminarNotificaciones")
     fun borrarNotificaciones(@RequestParam(required = false) @Parameter(name = "email", description = "Email de la persona", example = "gerente@gmail.com", required = true) email : String = "") {
         borrarNotificacionesService.borrarNotificaciones(email)
     }
